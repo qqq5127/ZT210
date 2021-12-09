@@ -1,0 +1,32 @@
+import os
+import sys
+
+from wq_tools import *
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+libname = 'player'
+
+cwd = Dir('.').srcnode().abspath
+core = WQTargetConfig.get_target_core()
+
+#modules
+module_name = ['common','music','voice','tone','volume','task','datamgr','stream','sync']
+
+#include path
+inc = []
+#pubilc
+inc.append(os.path.join(cwd, 'api'))
+#rpc
+inc.append(os.path.join(cwd, 'callee', 'dtop'))
+inc.append(os.path.join(cwd, 'caller', 'dtop'))
+#modules
+for inc_dir in module_name :
+    inc.append(os.path.join(cwd, inc_dir, 'cores', 'dtop'))
+    inc.append(os.path.join(cwd, inc_dir, 'cores', 'inc'))
+
+mod = WQModule(libname, [], env, pub_inc = inc, libs = libname)
+
+Return('mod')

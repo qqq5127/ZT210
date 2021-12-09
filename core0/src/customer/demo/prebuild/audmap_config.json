@@ -1,0 +1,81 @@
+{
+    "version": "2.0",
+    "audmap": [
+        {
+            "name":"voice_main",
+            "id":0,
+            "bias": 0,
+            "adc": 1,
+            "chn":1,
+            "asrc":2,
+            "rx_fifo":0,
+            "dac":255,
+            "note1":"bias is mic adc power switch, ranges is 0~1",
+            "note2":"adc is analog to digital module,ranges is 0~2",
+            "note3":"chn is adc digital front, filter, adjusted gain,ranges is 0~5",
+            "note4":"asrc is transfer sampling rate adjust frequency offset",
+            "note5":"rx fifo is adc path data stream buffer module,allow dma high speed transmission,ranges is 0~7",
+            "note6":"dac is digital to analog module,ranges is 0~1"
+        },
+        {
+            "name":"anc_ff",
+            "id":1,
+            "bias": 0,
+            "adc": 0,
+            "chn":0,
+            "asrc":255,
+            "rx_fifo":255,
+            "dac":1
+        },
+        {
+            "name":"anc_fb",
+            "id":2,
+            "bias": 1,
+            "adc": 2,
+            "chn":2,
+            "asrc":255,
+            "rx_fifo":255,
+            "dac":1
+        },
+        {
+            "name":"voice_second",
+            "id": 3,
+            "bias": 0,
+            "adc":0,
+            "chn":3,
+            "asrc":3,
+            "rx_fifo":1,
+            "dac":255
+        },
+        {
+            "name":"voice_third",
+            "id": 4,
+            "bias": 1,
+            "adc":2,
+            "chn":4,
+            "asrc":0,
+            "rx_fifo":2,
+            "dac":255
+        },
+        {
+            "name":"vad",
+            "id":5,
+            "bias": 0,
+            "adc":1,
+            "chn":4,
+            "asrc":255,
+            "rx_fifo":255,
+            "dac":255
+        },
+        {
+            "name":"play",
+            "id":6,
+            "bias": 255,
+            "adc":255,
+            "chn":255,
+            "asrc":1,
+            "rx_fifo":255,
+            "dac":1
+        }
+    ]
+}

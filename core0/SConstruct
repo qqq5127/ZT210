@@ -1,0 +1,94 @@
+import os
+import sys
+import copy
+import configparser
+
+sys.path.append(os.path.join('tools', 'SCons'))
+
+from wq_modules import *
+from wq_environment import *
+from firmware_package import repack
+
+target_sdk = {   'app': 'tws',
+    'core': 'core0',
+    'defines': [   'IOT_PRINTF_DEBUG',
+                   'LOW_POWER_ENABLE',
+                   'BT_USE_DTOP_IRAM',
+                   'USE_IRAM_TEXT',
+                   'AUD_INTF_PWR',
+                   'USE_DCDC12_HIGH_PULSE_WIDTH',
+                   'USE_DCDC18_HIGH_PULSE_WIDTH',
+                   {'OS_MALLOC_DEBUG_LEVEL': '0'},
+                   'BUILD_FROM_SDK'],
+    'libs': [   'dbglog',
+                'dbglog_cache',
+                'cpu_usage',
+                'share_task',
+                'rpc_data',
+                'rpc',
+                'power_mgnt',
+                'loader',
+                'key_value',
+                'storage_controller',
+                'led_manager',
+                'battery',
+                'generic_transmission',
+                'mic_dump',
+                'cfg_dsp',
+                'ota',
+                'suspend_sched',
+                'mem_monitor'],
+    'memory': 'tws',
+    'options': {'entry': 'user_app'},
+    'os': 'freertos_10_2_1',
+    'project': 'tws',
+    'walibs': ['cli', 'play_controller', 'player', 'bt_mgnt', 'dfs']}
+
+def read_cfg(cus):
+    if os.path.exists(os.path.join(cus, 'cfg', 'build.ini')):
+        config = configparser.ConfigParser()
+        config.read(os.path.join(cus, 'cfg', 'build.ini'))
+        c = {}
+        for s in config.sections():
+            c[s] = {}
+            for k, v in config.items(s):
+                c[s].update({k if not s == 'defines' else k.upper(): v})
+        return c
+    elif os.path.exists(os.path.join(cus, 'cfg', 'build.json')):
+        with open(os.path.join(cus, 'cfg', 'build.json'), 'r') as jf:
+            return json.load(jf)
+    else:
+        raise ValueError("Can't find a valid customer %s build config!" % cus)
+
+def build(target):
+    target['env'] = WQEnvironment()
+    WQTargetConfig.set_config(target, target['env'])
+
+    return SConscript(os.path.join('src', 'SConscript'), {"env": target['env']}, variant_dir = WQTargetConfig.get_build_dir(), duplicate = 0)
+
+# read config
+if ARGUMENTS.get('cus', 'demo') == 'all':
+    cuss = [c for c in os.listdir(os.path.join('src', 'customer')) if not c.startswith('.') and os.path.isdir(os.path.join('src', 'customer', c))]
+else:
+    cuss = ARGUMENTS.get('cus', 'demo').split(',')
+
+for c in cuss:
+    cfg = read_cfg(os.path.join('src', 'customer', c))
+    target = copy.deepcopy(target_sdk)
+    target['customer'] = c
+
+    for k, v in cfg.items():
+        if k in target:
+            if isinstance(target[k], list):
+                if isinstance(v, list):
+                    target[k].extend(v)
+                elif isinstance(v, dict):
+                    target[k].extend([{_k:_v} for _k, _v in v.items()])
+                else:
+                    raise ValueError("Wrong type of config value {}".format(k))
+            elif isinstance(target[k], dict):
+                if isinstance(v, dict):
+                    target[k].extend([{_k:_v} for _k, _v in v])
+                else:
+                    raise ValueError("Wrong type of config value {}".format(k))
+        build(target)

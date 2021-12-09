@@ -1,0 +1,18 @@
+import os
+import sys
+
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+app = WQTargetConfig.get_target_app()
+mods = []
+
+if app:
+    env.Append(CPPDEFINES = "APP_%s_ENABLE" % app.upper())
+    mods.append(SConscript(os.path.join(app, 'SConscript'), {"env": env}))
+
+mods.append(WQModule('app', [], env))
+
+Return('mods')

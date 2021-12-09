@@ -1,0 +1,39 @@
+import os
+import sys
+
+from wq_tools import *
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+libname = 'freertos'
+
+cwd = Dir('.').srcnode().abspath
+core = WQTargetConfig.get_target_core()
+
+defines = []
+flags = [
+    '-Wno-unused-variable',
+]
+
+pub_inc = []
+pub_inc.append(os.path.join(cwd, 'freertos', 'include'))
+pub_inc.append(os.path.join(cwd, 'freertos', 'include'))
+pub_inc.append(os.path.join(cwd, 'portable'))
+pub_inc.append(os.path.join(cwd, 'portable', 'GCC', 'RISC-V'))
+pub_inc.append(os.path.join(cwd, 'portable', 'GCC', 'RISC-V', 'chip_specific_extensions'))
+pub_inc.append(os.path.join(cwd, '..', 'os_shim', 'inc'))
+
+sources = []
+sources.extend(Glob(os.path.join('freertos', '*.c')))
+sources.extend(Glob(os.path.join('portable', 'GCC', 'RISC-V', '*.S')))
+sources.extend(Glob(os.path.join('portable', 'GCC', 'RISC-V', '*.c')))
+sources.extend(Glob(os.path.join('portable', 'MemMang', 'heap_5.c')))
+
+sources.extend(Glob(os.path.join('os_shim', '*.c')))
+sources.extend(Glob(os.path.join('os_shim', '*.S')))
+
+mod = WQModule(libname, sources, env, pub_inc = pub_inc, defines = defines, flags = flags)
+
+Return('mod')

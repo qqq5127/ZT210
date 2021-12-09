@@ -1,0 +1,28 @@
+import os
+import sys
+
+from wq_tools import *
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+libname = 'play_controller'
+
+cwd = Dir('.').srcnode().abspath
+core = WQTargetConfig.get_target_core()
+
+#common
+include_dir = [cwd]
+include_dir.append(os.path.join(cwd, 'tone_play'))
+include_dir.append(os.path.join(cwd, 'tone_storage'))
+include_dir.append(os.path.join(cwd, 'rpc_data_pack', 'inc'))
+
+include_dir.append(os.path.join(cwd, 'main'))
+include_dir.append(os.path.join(cwd, 'main', 'anc'))
+include_dir.append(os.path.join(cwd, 'dtop_data_mgr', 'inc'))
+include_dir.append(os.path.join(cwd, 'dtop_player_task', 'inc'))
+
+mod = WQModule(libname, [], env, pub_inc = include_dir, libs = libname)
+
+Return('mod')

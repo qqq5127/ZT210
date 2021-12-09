@@ -1,0 +1,19 @@
+import os
+import sys
+
+from wq_tools import *
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+libname = 'resource'
+
+cwd = Dir('.').srcnode().abspath
+core = WQTargetConfig.get_target_core()
+
+env.Append(CPPPATH = os.path.join(cwd, 'inc'))
+
+mod = WQModule(libname, [], env, libs = libname)
+
+Return('mod')

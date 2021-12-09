@@ -1,0 +1,75 @@
+{
+  "version": "2.0",
+  "audmap": [
+    {
+      "name": "voice_main",
+      "id": 0,
+      "bias": 1,
+      "adc": 2,
+      "chn": 1,
+      "asrc": 2,
+      "rx_fifo": 0,
+      "dac": 255
+    },
+    {
+      "name": "anc_ff",
+      "id": 1,
+      "bias": 0,
+      "adc": 1,
+      "chn": 0,
+      "asrc": 255,
+      "rx_fifo": 255,
+      "dac": 1
+    },
+    {
+      "name": "anc_fb",
+      "id": 2,
+      "bias": 0,
+      "adc": 0,
+      "chn": 2,
+      "asrc": 255,
+      "rx_fifo": 255,
+      "dac": 1
+    },
+    {
+      "name": "voice_second",
+      "id": 3,
+      "bias": 0,
+      "adc": 1,
+      "chn": 3,
+      "asrc": 3,
+      "rx_fifo": 1,
+      "dac": 255
+    },
+    {
+      "name": "voice_third",
+      "id": 4,
+      "bias": 0,
+      "adc": 0,
+      "chn": 4,
+      "asrc": 0,
+      "rx_fifo": 2,
+      "dac": 255
+    },
+    {
+      "name": "vad",
+      "id": 5,
+      "bias": 255,
+      "adc": 255,
+      "chn": 4,
+      "asrc": 255,
+      "rx_fifo": 255,
+      "dac": 255
+    },
+    {
+      "name": "play",
+      "id": 6,
+      "bias": 255,
+      "adc": 255,
+      "chn": 255,
+      "asrc": 1,
+      "rx_fifo": 255,
+      "dac": 1
+    }
+  ]
+}

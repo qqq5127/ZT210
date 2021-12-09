@@ -1,0 +1,107 @@
+{
+    "version": "2.0",
+    "iomap": [
+        {
+            "name":"uart0_cts",
+            "id": 0,
+            "pull": 1,
+            "gpio":255
+        },
+        {
+            "name":"uart0_rxd",
+            "id": 1,
+            "pull": 1,
+            "gpio":2
+        },
+        {
+            "name":"uart0_rts",
+            "id": 2,
+            "pull": 1,
+            "gpio": 255
+        },
+        {
+            "name":"uart0_txd",
+            "id": 3,
+            "pull": 1,
+            "gpio": 1
+        },
+        {
+            "name":"uart1_cts",
+            "id": 4,
+            "pull": 1,
+            "gpio":255
+        },
+        {
+            "name":"uart1_rxd",
+            "id": 5,
+            "pull": 1,
+            "gpio": 73
+        },
+        {
+            "name":"uart1_rts",
+            "id": 6,
+            "pull": 1,
+            "gpio": 255
+        },
+        {
+            "name":"uart1_txd",
+            "id": 7,
+            "pull": 1,
+            "gpio": 74
+        },
+        {
+            "name":"led_led0",
+            "id": 8,
+            "pull": 2,
+            "gpio": 63
+        },
+        {
+            "name":"led_led1",
+            "id": 9,
+            "pull": 1,
+            "gpio": 255
+        },
+        {
+            "name":"led_led2",
+            "id": 10,
+            "pull": 1,
+            "gpio": 255
+        },
+        {
+            "name":"key_key0",
+            "id": 11,
+            "pull": 1,
+            "gpio": 255
+        },
+        {
+            "name":"key_key1",
+            "id": 12,
+            "pull": 1,
+            "gpio": 92
+        },
+        {
+            "name":"key_key2",
+            "id": 13,
+            "pull": 2,
+            "gpio": 0
+        },
+        {
+            "name":"key_key3",
+            "id": 14,
+            "pull": 1,
+            "gpio": 255
+        },
+        {
+            "name":"touch_key0",
+            "id": 96,
+            "pull": 1,
+            "gpio": 69
+        },
+        {
+            "name":"inear_key0",
+            "id": 112,
+            "pull": 1,
+            "gpio": 70
+        }
+    ]
+}

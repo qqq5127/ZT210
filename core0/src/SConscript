@@ -1,0 +1,115 @@
+import os
+import sys
+
+from wq_environment import *
+from wq_modules import *
+from dbglog_tool import *
+from firmware_package import repack
+
+Import('env')
+
+cwd = Dir('.').srcnode().abspath
+name = WQTargetConfig.get_target_name()
+chip = WQTargetConfig.get_target_chip()
+core = WQTargetConfig.get_target_core()
+memory = WQTargetConfig.get_target_memory()
+use_os = WQTargetConfig.get_use_os()
+
+if use_os == 'freertos_10_2_1':
+    env.Append(CPPDEFINES = ['BUILD_OS_FREERTOS'])
+else:
+    env.Append(CPPDEFINES = ['BUILD_OS_NON_OS'])
+
+common_libs = ['common', 'riscv', 'utils', 'iot_debug', 'iot_libc', "boot_reason", 'oem', 'resource', 'mmon', 'caldata']
+
+sources = []
+libs = []
+base_libs = []
+driver_lib = []
+os_lib = []
+vendor_lib = []
+app_lib = []
+cus_lib = []
+
+# Read prebuilt log table
+if os.path.exists(os.path.join(Dir('#').path, 'prebuild', 'log_table.log')):
+    env.Append(LOGPKLS = os.path.join(Dir('#').path, 'prebuild', 'log_table.log'))
+    file_list = get_file_list(os.path.join(Dir('#').path, 'prebuild', 'log_table.log'))
+    env['FILEIDBASE'] += len(file_list)
+
+# Config Header add first
+SConscript(os.path.join('config', 'SConscript'), {"env": env})
+
+#common libs
+for l in common_libs:
+    env.Append(CPPDEFINES = ['LIB_%s_ENABLE' % l.upper()])
+    base_libs.append(SConscript(os.path.join('lib', l, 'SConscript'), {"env": env}))
+
+# Driver
+driver_lib.append(SConscript(os.path.join('driver', 'SConscript'), {"env": env}))
+
+# Libs
+build_libs = WQTargetConfig.get_target_libs()
+for l in build_libs:
+    env.Append(CPPDEFINES = ['LIB_%s_ENABLE' % l.upper()])
+    libs.append(SConscript(os.path.join('lib', l, 'SConscript'), {"env": env}))
+
+# Whole archive libs
+walibs = []
+build_walibs = WQTargetConfig.get_target_walibs()
+for l in build_walibs:
+    env.Append(CPPDEFINES = ['LIB_%s_ENABLE' % l.upper()])
+    walibs.append(SConscript(os.path.join('lib', l, 'SConscript'), {"env": env}))
+
+# OS
+os_lib.append(SConscript(os.path.join('os', 'SConscript'), {"env": env}))
+
+# Vendor
+vendor_lib.append(SConscript(os.path.join('vendor', 'SConscript'), {"env": env}))
+
+# App
+app_lib.append(SConscript(os.path.join('app', 'SConscript'), {"env": env}))
+
+# Customer
+cus = WQTargetConfig.get_customer()
+if cus:
+    cus_path = os.path.join('customer', cus)
+    if os.path.exists(os.path.join(Dir('.').srcnode().abspath, cus_path, 'src')):
+        cus_lib.append(SConscript(os.path.join(cus_path, 'src', 'SConscript'), {"env": env}))
+
+# Project source
+sources.append(SConscript(os.path.join('project', 'SConscript'), {"env": env}))
+mods = Flatten([base_libs, libs, driver_lib, os_lib, app_lib, vendor_lib, cus_lib])
+
+env.Append(LIBS = ['gcc'] + build_library(mods))
+env.Append(WALIBS = build_library(walibs))
+
+link_file = os.path.join('config', chip, 'memory', memory, core, 'linker.prelds')
+lds = env.LDS(target = 'link.lds', source = link_file)
+elf = env.Program(target = os.path.join(name + '.elf'), source = sources)
+log = env.DBGTBL(target = name, source = File(WQTargetConfig.get_file_list(env), '#'))
+
+env.Depends(elf, lds)
+env.Depends(log, elf)
+env['WALIBS'] and env.Depends(elf, env['WALIBS'])
+
+asm = env.ASM(target = name, source = elf)
+bin = env.BIN(target = name, source = elf)
+info = env.INFO(target = name, source = elf)
+
+if ARGUMENTS.get('bin_only', '0') == '1':
+    Return([])
+
+if any([d in env['CPPDEFINES'] for d in ['NDEBUG', 'RELEASE']]):
+    pkgs = Glob(os.path.join('#', 'prebuild', 'release', '*.wpk'))
+else:
+    pkgs = Glob(os.path.join('#', 'prebuild', 'debug', '*.wpk'))
+
+if len(pkgs) == 1:
+    repack(pkgs[0], [bin, info, log], env, WQTargetConfig.get_customer())
+elif len(pkgs) == 0:
+    print("Error:The pre-built firmware package cannot be found and will not be repackaged!")
+    Exit(-1)
+else:
+    print("Error:Multiple pre-built firmware packages are found and will not be repackaged!")
+    Exit(-1)

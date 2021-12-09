@@ -1,0 +1,33 @@
+import os
+import sys
+
+from wq_tools import *
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+libname = 'storage_controller'
+
+cwd = Dir('.').srcnode().abspath
+core = WQTargetConfig.get_target_core()
+
+sources = []
+if core == 'core0':
+    sources.extend(Glob('*.c'))
+    sources.extend(Glob(os.path.join('callee', '*.c')))
+    env.Append(CPPPATH = os.path.join(cwd))
+else :
+    sources.extend(Glob(os.path.join('caller', '*.c')))
+
+    if WQTargetConfig.get_build_type() in ['rom_lib']:
+        sources = wq_rom_lib_src([], ['.'], env, empty=sources)
+    # elif WQTargetConfig.get_build_type() in ['patch']:
+    #     libname = libname + '_patch'
+    #     sources = wq_rom_lib_src(sources, ['.'], env)
+    else:
+        env.Append(CPPPATH = os.path.join(cwd))
+
+mod = WQModule(libname, sources, env)
+
+Return('mod')

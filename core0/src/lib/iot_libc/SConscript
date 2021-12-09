@@ -1,0 +1,42 @@
+import os
+import sys
+
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+libname = 'iot_libc'
+
+cwd = Dir('.').srcnode().abspath
+core = WQTargetConfig.get_target_core()
+
+include_dir = []
+include_dir.append(os.path.join(cwd, 'inc'))
+
+sources = []
+if WQTargetConfig.get_build_type() == 'patch':
+    sources.extend(Glob(os.path.join('src', 'assert', '*.c')))
+    if WQTargetConfig.get_rom_version() == '1.0':
+        # rom 1.0 has no assert need to build
+        sources.extend(Glob(os.path.join('src', 'math', '*.c')))
+elif WQTargetConfig.get_build_type() == 'lint':
+    sources.extend(Glob(os.path.join('src', 'assert', '*.c')))
+else:
+    sources.extend(Glob(os.path.join('src', 'assert', '*.c')))
+    sources.extend(Glob(os.path.join('src', 'string', '*.S')))
+    sources.extend(Glob(os.path.join('src', 'string', '*.c')))
+    sources.extend(Glob(os.path.join('src', 'stdio', '*.c')))
+    sources.extend(Glob(os.path.join('src', 'stdlib', '*.c')))
+    sources.extend(Glob(os.path.join('src', 'math', '*.c')))
+    sources.extend(Glob(os.path.join('src', '*.c')))
+
+env.Append(CPPPATH = include_dir)
+
+flags = [
+    '-fno-builtin',
+]
+
+mod = WQModule(libname, sources, env, flags = flags)
+
+Return('mod')

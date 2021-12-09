@@ -1,0 +1,25 @@
+import os
+import sys
+
+from wq_tools import *
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+libname = 'rpc_data'
+
+cwd = Dir('.').srcnode().abspath
+
+inc = []
+inc.append(os.path.join(cwd, 'ring'))
+inc.append(os.path.join(cwd, 'cores', 'inc'))
+
+cwd = Dir('.').srcnode().abspath
+core = WQTargetConfig.get_target_core()
+
+env.Append(CPPPATH = inc)
+
+mod = WQModule(libname, [], env, libs = libname)
+
+Return('mod')

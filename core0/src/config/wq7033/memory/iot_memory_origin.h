@@ -1,0 +1,124 @@
+#include "chip_reg_base.h"
+
+/* DTOP */
+#define DCP_ROM_START  AON_S0_BOOT_ROM_BASEADDR
+#define DCP_ROM_LENGTH (AON_S0_BOOT_ROM_ENDADDR - AON_S0_BOOT_ROM_BASEADDR + 1)
+
+#define DCP_IRAM0_LENGTH ((AON_S2_IRAM_ENDADDR - AON_S2_IRAM_BASEADDR) + 1)
+#define DCP_IRAM1_LENGTH ((AON_S3_IRAM_ENDADDR - AON_S3_IRAM_BASEADDR) + 1)
+#define DCP_IRAM2_LENGTH ((AON_S4_IRAM_ENDADDR - AON_S4_IRAM_BASEADDR) + 1)
+#define DCP_IRAM3_LENGTH ((AON_S5_IRAM_ENDADDR - AON_S5_IRAM_BASEADDR) + 1)
+
+#define DCP_IRAM_START AON_S2_IRAM_BASEADDR
+#define DCP_IRAM_LENGTH \
+    (DCP_IRAM0_LENGTH + DCP_IRAM1_LENGTH + DCP_IRAM2_LENGTH + DCP_IRAM3_LENGTH)
+
+/* BT */
+#define BCP_ROM0_LENGTH ((BT_S0_DROM_ENDADDR - BT_S0_DROM_BASEADDR) + 1)
+#define BCP_ROM1_LENGTH ((BT_S1_DROM_ENDADDR - BT_S1_DROM_BASEADDR) + 1)
+
+#define BCP_ROM_START  BT_S0_DROM_BASEADDR
+#define BCP_ROM_LENGTH (BCP_ROM0_LENGTH + BCP_ROM1_LENGTH)
+
+#define BCP_IRAM0_LENGTH ((BT_S2_IRAM_ENDADDR - BT_S2_IRAM_BASEADDR) + 1)
+#define BCP_IRAM1_LENGTH ((BT_S3_IRAM_ENDADDR - BT_S3_IRAM_BASEADDR) + 1)
+#define BCP_IRAM2_LENGTH ((BT_S4_IRAM_ENDADDR - BT_S4_IRAM_BASEADDR) + 1)
+
+#define BCP_IRAM_START  BT_S2_IRAM_BASEADDR
+#define BCP_IRAM_LENGTH (BCP_IRAM0_LENGTH + BCP_IRAM1_LENGTH + BCP_IRAM2_LENGTH)
+
+/* DSP */
+#define DSP_IROM_START AUD_S0_TCM_IROM_BASEADDR
+#define DSP_DROM_START AUD_S0_TCM_DROM_BASEADDR
+
+#define DSP_IRAM_START AUD_S0_TCM_IRAM_BASEADDR
+
+/* FLASH 2M */
+#define FLASH_START       0x4000000
+#define FLASH_LENGTH      0x200000
+#define FLASH_END         (FLASH_START + FLASH_LENGTH)
+#define FLASH_SECTOR_SIZE 0x1000
+#define FLASH_SECTOR_MASK ~(FLASH_SECTOR_SIZE - 1)
+#define FLASH_SECTOR_NUM  (0x200000 / 0x1000)
+
+/* PSRAM DDR 4M */
+#define PSRAM_DDR_START  0x24000000
+#define PSRAM_DDR_LENGTH 0x400000
+#define PSRAM_DDR_END    (PSRAM_DDR_START + PSRAM_DDR_LENGTH)
+
+/* Image header */
+#define IMAGE_HEADER_LEN 0x20
+
+/**
+ * flash start ->  +-----------+
+ *                 |   PBL     | --> 4K (1 sectors)
+ *                 +-----------+
+ *                 |   SBL     | --> 60K (15 sectors)
+ *                 +-----------+
+ *                 |   BCP     | --> 480K (120 sectors)
+ *                 +-----------+
+ *                 |   ACP     | --> 320K (80 sectors)
+ *                 +-----------+
+ *                 |   DCP     | --> 384K (96 sectors)
+ *                 +-----------+
+ *                 |   FOTA    | --> 644K (161 sectors)
+ *                 +-----------+
+ *                 |   TONE    | --> 100K (25 sectors)
+ *                 +-----------+
+ *                 |    ANC    | --> 8K (2 sectors)
+ *                 +-----------+
+ *                 |    KV     | --> 32K (8 sectors)
+ *                 +-----------+
+ *                 | BOOT MAP  | --> 8K (2 sectors)
+ *                 +-----------+
+ *                 |    OEM    | --> 4K (1 sectors)
+ *                 +-----------+
+ *                 |    CAL    | --> 4K (1 sectors)
+ * flash end   ->  +-----------+
+ */
+
+#define FLASH_PBL_SECTORS       1
+#define FLASH_SBL_SECTORS       15
+#define FLASH_BCP_SECTORS       120
+#define FLASH_ACP_SECTORS       80
+#define FLASH_DCP_SECTORS       96
+#define FLASH_FOTA_SECTORS      161
+#define FLASH_TONE_SECTORS      25
+#define FLASH_ANC_DATA_SECTORS  2
+#define FLASH_KEY_VALUE_SECTORS 8
+#define FLASH_BOOT_MAP_SECTORS  2
+#define FLASH_OEM_DATA_SECTORS  1
+#define FLASH_CAL_DATA_SECTORS  1
+
+#if ((FLASH_PBL_SECTORS + FLASH_SBL_SECTORS + FLASH_BCP_SECTORS + FLASH_ACP_SECTORS + FLASH_DCP_SECTORS \
+      + FLASH_FOTA_SECTORS + FLASH_TONE_SECTORS + FLASH_ANC_DATA_SECTORS + FLASH_KEY_VALUE_SECTORS \
+      + FLASH_BOOT_MAP_SECTORS + FLASH_OEM_DATA_SECTORS + FLASH_CAL_DATA_SECTORS)                  \
+     > FLASH_SECTOR_NUM)
+#error "Flash exceeds the limit, please check memory config!"
+#endif
+
+#define FLASH_PBL_OFFSET FLASH_START
+#define FLASH_PBL_LENGTH (FLASH_SECTOR_SIZE * FLASH_PBL_SECTORS)
+#define FLASH_SBL_OFFSET (FLASH_PBL_OFFSET + FLASH_PBL_LENGTH)
+#define FLASH_SBL_LENGTH (FLASH_SECTOR_SIZE * FLASH_SBL_SECTORS)
+#define FLASH_BCP_OFFSET (FLASH_SBL_OFFSET + FLASH_SBL_LENGTH)
+#define FLASH_BCP_LENGTH (FLASH_SECTOR_SIZE * FLASH_BCP_SECTORS)
+#define FLASH_ACP_OFFSET (FLASH_BCP_OFFSET + FLASH_BCP_LENGTH)
+#define FLASH_ACP_LENGTH (FLASH_SECTOR_SIZE * FLASH_ACP_SECTORS)
+#define FLASH_DCP_OFFSET (FLASH_ACP_OFFSET + FLASH_ACP_LENGTH)
+#define FLASH_DCP_LENGTH (FLASH_SECTOR_SIZE * FLASH_DCP_SECTORS)
+#define FLASH_FOTA_OFFSET (FLASH_DCP_OFFSET + FLASH_DCP_LENGTH)
+#define FLASH_FOTA_LENGTH (FLASH_SECTOR_SIZE * FLASH_FOTA_SECTORS)
+#define FLASH_TONE_OFFSET (FLASH_FOTA_OFFSET + FLASH_FOTA_LENGTH)
+#define FLASH_TONE_LENGTH (FLASH_SECTOR_SIZE * FLASH_TONE_SECTORS)
+
+#define FLASH_CAL_DATA_LENGTH  (FLASH_SECTOR_SIZE * FLASH_CAL_DATA_SECTORS)
+#define FLASH_CAL_DATA_OFFSET  (FLASH_LENGTH - FLASH_CAL_DATA_LENGTH)
+#define FLASH_OEM_DATA_LENGTH  (FLASH_SECTOR_SIZE * FLASH_OEM_DATA_SECTORS)
+#define FLASH_OEM_DATA_OFFSET  (FLASH_CAL_DATA_OFFSET - FLASH_OEM_DATA_LENGTH)
+#define FLASH_BOOT_MAP_LENGTH  (FLASH_SECTOR_SIZE * FLASH_BOOT_MAP_SECTORS)
+#define FLASH_BOOT_MAP_OFFSET  (FLASH_OEM_DATA_OFFSET - FLASH_BOOT_MAP_LENGTH)
+#define FLASH_KEY_VALUE_LENGTH (FLASH_SECTOR_SIZE * FLASH_KEY_VALUE_SECTORS)
+#define FLASH_KEY_VALUE_OFFSET (FLASH_BOOT_MAP_OFFSET - FLASH_KEY_VALUE_LENGTH)
+#define FLASH_ANC_DATA_LENGTH  (FLASH_SECTOR_SIZE * FLASH_ANC_DATA_SECTORS)
+#define FLASH_ANC_DATA_OFFSET  (FLASH_KEY_VALUE_OFFSET - FLASH_ANC_DATA_LENGTH)

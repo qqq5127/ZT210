@@ -1,0 +1,53 @@
+Import('env')
+
+import os
+import subprocess
+
+from wq_modules import *
+from wq_environment import *
+
+libname = 'utils'
+
+def get_git_info():
+    try:
+        commit = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).strip().decode('utf-8')
+    except:
+        commit = ''
+
+    try:
+        user = subprocess.check_output(['git', 'config', 'user.name']).strip().decode('utf-8')
+    except:
+        user = ''
+
+    return commit, user
+
+# Public API
+include_dir = [os.path.join(Dir('.').srcnode().abspath, 'inc')]
+env.Append(CPPPATH = include_dir)
+
+sources = []
+if WQTargetConfig.get_use_os() == 'rtthread':
+    sources.extend(Glob(os.path.join('src', '*.c')))
+else:
+    sources.extend(Glob(os.path.join('src', '*.c'), exclude=os.path.join('src', 'atomic.c')))
+
+version = ARGUMENTS.get('BUILD_VERSION', '0.0.0.0').split('.')
+
+defines = [
+    {"FIRMWARE_VERSION_MAJOR": version[0]},
+    {"FIRMWARE_VERSION_MINOR": version[1]},
+    {"FIRMWARE_VERSION_MICRO": version[2]},
+    {"FIRMWARE_VERSION_BUILD": version[3]},
+]
+
+commit, user = get_git_info()
+if commit:
+    defines.append({"FIRMWARE_BUILD_COMMIT": r'\"%s\"' % commit})
+if user:
+    defines.append({"FIRMWARE_BUILD_USER": r'\"%s\"' % user})
+
+env.Append(CPPDEFINES=defines)
+
+mod = WQModule(libname, sources, env)
+
+Return('mod')

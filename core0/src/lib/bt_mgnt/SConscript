@@ -1,0 +1,28 @@
+import os
+import sys
+
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+libname = 'bt_mgnt'
+
+cwd = Dir('.').srcnode().abspath
+core = WQTargetConfig.get_target_core()
+
+sources = []
+if core == 'core0':
+    sources.extend(Glob(os.path.join('user', '*.c')))
+    sources.extend(Glob(os.path.join('user', 'caller', '*.c')))
+    sources.extend(Glob(os.path.join('user', 'callee', '*.c')))
+    env.Append(CPPPATH = os.path.join(cwd))
+else :
+    sources.extend(Glob(os.path.join('bt', '*.c')))
+    sources.extend(Glob(os.path.join('bt', 'caller', '*.c')))
+    sources.extend(Glob(os.path.join('bt', 'callee', '*.c')))
+    env.Append(CPPPATH = os.path.join(cwd))
+
+mod = WQModule(libname, sources, env)
+
+Return('mod')

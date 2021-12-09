@@ -1,0 +1,41 @@
+import os
+import sys
+
+from wq_tools import *
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+libname = 'generic_transmission'
+
+cwd = Dir('.').srcnode().abspath
+core = WQTargetConfig.get_target_core()
+
+sources = []
+pub_inc = []
+pri_inc = []
+
+#common
+pub_inc.append(os.path.join(cwd, 'inc'))
+sources.append(os.path.join('src', 'generic_transmission.c'))
+
+if core == 'core0':
+    pri_inc.append(os.path.join(cwd, 'src'))
+    pri_inc.append(os.path.join(cwd, 'io_methods'))
+    sources.append(os.path.join('src', 'generic_transmission_io.c'))
+    sources.append(os.path.join('src', 'generic_transmission_profile.c'))
+    sources.extend(Glob(os.path.join('io_methods', '*.c')))
+
+if WQTargetConfig.get_target_platform() == 'chip' :
+    defines = [
+        'CONFIG_GENERIC_TRANSMISSION_IO_UART_USE_DMA=1',
+    ]
+else:
+    defines = [
+        'CONFIG_GENERIC_TRANSMISSION_IO_UART_USE_DMA=0',
+    ]
+
+mod = WQModule(libname, sources, env, pri_inc=pri_inc, pub_inc=pub_inc, defines=defines)
+
+Return('mod')

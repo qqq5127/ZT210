@@ -1,0 +1,30 @@
+import os
+import sys
+
+from wq_tools import *
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+libname = 'key_value'
+use_os = WQTargetConfig.get_use_os()
+
+cwd = Dir('.').srcnode().abspath
+core = WQTargetConfig.get_target_core()
+
+sources = [
+    os.path.join('src', 'key_value.c'),
+    os.path.join('src', 'key_value_port.c')
+]
+
+pub_inc = [os.path.join(cwd, 'inc')]
+pri_inc = []
+
+if use_os in ['freertos_10_2_1', 'rtthread']:
+    sources.append(os.path.join('src', 'key_value_cache.c'))
+    pri_inc.append(os.path.join(cwd, 'src'))
+
+mod = WQModule(libname, sources, env, pri_inc = pri_inc, pub_inc = pub_inc)
+
+Return('mod')

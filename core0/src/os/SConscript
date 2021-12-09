@@ -1,0 +1,17 @@
+import os
+import sys
+
+from wq_tools import *
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+use_os = WQTargetConfig.get_use_os()
+mods = []
+if use_os:
+    mods.append(SConscript(os.path.join(use_os, 'SConscript'), {'env': env}))
+
+mods.append(WQModule('os', [], env))
+
+Return('mods')

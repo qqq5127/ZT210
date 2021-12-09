@@ -1,0 +1,41 @@
+import os
+import sys
+
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+libname = 'vendor'
+
+cwd = Dir('.').srcnode().abspath
+core = WQTargetConfig.get_target_core()
+
+vendors = []
+
+if core == 'core0' and WQTargetConfig.get_target_app() == 'tws':
+    for d in os.listdir(cwd):
+        if os.path.isdir(os.path.join(cwd, d)):
+            vendors.append(d)
+
+pri_inc = []
+pub_inc = [cwd]
+defines = []
+sources = []
+libs = []
+
+#libs.extend(['/key_sensor/aw8686x/libaw8686x'])
+libs.extend(['aw8686x'])
+
+for v in vendors:
+    env.Append(CPPDEFINES = 'VENDOR_%s_ENABLE' % v.upper())
+    sources.extend(Glob(os.path.join(v, '*.c')))
+    sources.extend(Glob(os.path.join(v, '**' ,'*.c')))
+    pub_inc.append(os.path.join(cwd, v))
+    for i in Glob(os.path.join(cwd, v, '**')):
+        if os.path.isdir(i.abspath):
+            pub_inc.append(i.abspath)
+
+mod = WQModule(libname, sources, env, pri_inc=pri_inc, pub_inc=pub_inc, defines=defines,libs=libs)
+
+Return('mod')

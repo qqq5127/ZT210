@@ -1,0 +1,46 @@
+import os
+import sys
+
+from wq_tools import *
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+cwd = Dir('.').srcnode().abspath
+core = WQTargetConfig.get_target_core()
+
+# common inc
+comm_inc = [os.path.join(cwd, 'common')]
+
+# hw library
+hw_inc = [os.path.join(cwd, 'hw')]
+
+# non_os driver
+non_os = []
+for d in os.listdir(os.path.join(cwd, 'non_os')):
+    if os.path.isdir(os.path.join(cwd, 'non_os', d)):
+        non_os.append(d)
+
+non_os.append(os.path.join('flash', 'puya'))
+non_os.append(os.path.join('flash', 'gd'))
+
+# os add hal driver
+hal = []
+if WQTargetConfig.get_use_os() not in ['', 'non_os']:
+    # normal build add all src
+    for d in os.listdir(os.path.join(cwd, 'hal')):
+        if os.path.isdir(os.path.join(cwd, 'hal', d)):
+            if d in non_os:
+                non_os.remove(d)
+            hal.append(d)
+    hal.sort()
+
+hal_src = []
+hal_src.extend([Glob(os.path.join('non_os', d, '*.[cS]')) for d in non_os])
+hal_src.extend([Glob(os.path.join('hal', d, '*.c')) for d in hal])
+hal_inc = [os.path.join('non_os', d) for d in non_os] + [os.path.join('hal', d) for d in hal]
+hal_inc = list(map(lambda x: os.path.join(cwd, x), hal_inc))
+mod = WQModule('driver', hal_src, env, pub_inc = comm_inc + hw_inc + hal_inc, libs = ['hwdriver'])
+
+Return(['mod'])

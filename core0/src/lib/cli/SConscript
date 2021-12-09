@@ -1,0 +1,57 @@
+import os
+import sys
+
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+libname = 'cli'
+
+cwd = Dir('.').srcnode().abspath
+core = WQTargetConfig.get_target_core()
+app = WQTargetConfig.get_target_app()
+
+pub_inc = []
+pub_inc.append(os.path.join(cwd, 'inc'))
+pub_inc.append(os.path.join(cwd, 'common'))
+pub_inc.append(os.path.join(cwd, 'audio'))
+pub_inc.append(os.path.join(cwd, 'ftm'))
+pub_inc.append(os.path.join(cwd, 'ftm','gpio'))
+pub_inc.append(os.path.join(cwd, 'ftm','touch_key'))
+pub_inc.append(os.path.join(cwd, 'lowpower'))
+pub_inc.append(os.path.join(cwd, 'ftm','madc'))
+pub_inc.append(os.path.join(cwd, 'charger'))
+pub_inc.append(os.path.join(cwd, 'led'))
+
+pri_inc = [os.path.join(cwd, 'src')]
+
+sources = []
+sources.extend(Glob(os.path.join('src', '*.c')))
+sources.extend(Glob(os.path.join('common', '*.c')))
+sources.extend(Glob(os.path.join('audio', '*.c')))
+sources.extend(Glob(os.path.join('ftm', 'gpio', '*.c')))
+sources.extend(Glob(os.path.join('ftm', 'touch_key', '*.c')))
+sources.extend(Glob(os.path.join('lowpower', '*.c')))
+sources.extend(Glob(os.path.join('ftm', 'madc', '*.c')))
+sources.extend(Glob(os.path.join('charger', '*.c')))
+sources.extend(Glob(os.path.join('led', '*.c')))
+
+if app == 'tws':
+    pub_inc.append(os.path.join(cwd, 'application'))
+    sources.extend(Glob(os.path.join('application', '*.c')))
+
+if WQTargetConfig.get_target_options().get('bt', 'off') == 'on':
+    sub_modeules = [
+        os.path.join('bt', 'stack', 'common', 'cli'),
+        os.path.join('bt', 'phy', 'cli'),
+    ]
+
+    # Submodule sources
+    for m in sub_modeules:
+        if os.path.exists(os.path.join(Dir('#').path, 'src', m, 'SConscript')):
+            sources.extend(SConscript(os.path.join(Dir('#').path, 'src', m, 'SConscript'), {"env": env}, variant_dir = m, duplicate = 0))
+
+mod = WQModule(libname, sources, env, pri_inc=pri_inc, pub_inc=pub_inc)
+
+Return('mod')

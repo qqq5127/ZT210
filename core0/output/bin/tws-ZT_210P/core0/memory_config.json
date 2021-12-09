@@ -1,0 +1,56 @@
+{
+    "version": "4.0",
+    "images": [
+        {
+            "id": "0x01",
+            "name": "pbl_core0.bin",
+            "lma": 0,
+            "length": 4096,
+            "start": 33554432,
+            "vma": 33554432
+        },
+        {
+            "id": "0x10",
+            "name": "sbl_core0.bin",
+            "lma": 4096,
+            "length": 61440,
+            "start": 33652736,
+            "vma": 33652736
+        },
+        {
+            "id": "0x20",
+            "name": "tws_core0.bin",
+            "lma": 884736,
+            "length": 393216,
+            "start": 67993632,
+            "vma": "0"
+        },
+        {
+            "id": "0x30",
+            "name": "tws_core1.bin",
+            "lma": 65536,
+            "length": 466944,
+            "start": 67174432,
+            "vma": "0"
+        },
+        {
+            "id": "0x05",
+            "name": "tone.bin",
+            "lma": 1937408,
+            "length": 102400
+        },
+        {
+            "id": "0x70",
+            "name": "dsp_tws_app.bin",
+            "lma": 557056,
+            "length": 327680
+        },
+        {
+            "id": "0x32",
+            "name": "tws_core1.tbl",
+            "lma": 532480,
+            "length": 24576,
+            "vma": 270532608
+        }
+    ]
+}

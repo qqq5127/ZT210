@@ -1,0 +1,25 @@
+import os
+import sys
+
+from wq_tools import *
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+libname = 'dbglog_cache'
+
+cwd = Dir('.').srcnode().abspath
+core = WQTargetConfig.get_target_core()
+
+sources = Glob(os.path.join('src', '*.c'))
+if WQTargetConfig.get_build_type() == 'rom_lib' and core == 'core1':
+    sources = wq_rom_lib_src(sources, ['inc'], env)
+elif WQTargetConfig.get_build_type() == 'patch' and WQTargetConfig.get_rom_version() != '1.0' and core == 'core1':
+    sources = wq_rom_lib_src(sources, ['inc'], env)
+else:
+    env.Append(CPPPATH = os.path.join(cwd, 'inc'))
+
+mod = WQModule(libname, sources, env)
+
+Return('mod')

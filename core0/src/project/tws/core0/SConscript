@@ -1,0 +1,18 @@
+import os
+import sys
+
+from wq_environment import *
+
+Import('env')
+
+cwd = Dir('.').srcnode().abspath
+include_dir = []
+include_dir.append(cwd)
+
+env.Append(CPPPATH = include_dir)
+
+sources = []
+sources.extend(Glob('*.c'))
+sources.extend(Glob('*.S'))
+
+Return('sources')

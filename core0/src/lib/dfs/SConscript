@@ -1,0 +1,34 @@
+import os
+import sys
+
+from wq_tools import *
+from wq_modules import *
+from wq_environment import *
+
+Import('env')
+
+libname = 'dfs'
+
+cwd = Dir('.').srcnode().abspath
+core = WQTargetConfig.get_target_core()
+core_map = {
+    'core0': 'dtop',
+    'core1': 'bt',
+    'core3': 'audio',
+}
+sources = []
+include_dir = []
+
+#common
+include_dir.append(os.path.join(cwd, 'inc'))
+
+if core_map[core] == 'dtop' :
+    #src
+    sources.extend(Glob(os.path.join('src', 'callee', 'dtop', '*.c')))
+    sources.extend(Glob(os.path.join('src', 'caller', 'dtop', '*.c')))
+elif core_map[core] == 'bt' :
+    sources.extend(Glob(os.path.join('src', 'caller', 'bt', '*.c')))
+
+mod = WQModule(libname, sources, env, pub_inc = include_dir)
+
+Return('mod')

@@ -1,0 +1,1020 @@
+{
+    "version": "2.0",
+    "name": "mcuconfig",
+    "btname": {
+        "btname": "WQ_BT"
+    },
+    "btgeneraldata": {
+        "tws_linkkey": "00000000000000000000000000000000",
+        "is_pri_dev": 0,
+        "peer_addr": "000000000000",
+        "tws_single_mode": 0,
+        "reserved": "0000000000000000000000"
+    },
+    "btreadonlydata": {
+        "is_left_dev": 0,
+        "tws_role_mode": 1,
+        "hci_log_enable": 1,
+        "phone_linkloss_timeout": 0,
+        "a2dp_sbc_bitpool_max": 0,
+        "a2dp_mpeg24_vbr_enable": 0,
+        "a2dp_mpeg24_bitrate": 0,
+        "a2dp_parameter_default": 0,
+        "a2dp_sampling_freq_48k_enable": 0,
+        "a2dp_codec_priority": 0,
+        "paging_phone_timeout": 0,
+        "reserved": "00000000000000000000"
+    },
+    "general": {
+        "ic_part_name": "57513730333300000000000000000000",
+        "reserved1": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "fw_version": 168496141,
+        "vid": 0,
+        "pid": 0,
+        "default_listen_mode": 0,
+        "default_listen_mode_toggle_config": 8,
+        "reserved2": "00000000000000000000000000000000"
+    },
+    "system": {
+        "reserved1": "0000000000000000",
+        "power_on_reconnect_retry_count": 1,
+        "link_loss_reconnect_retry_count": 60,
+        "reserved3": "0000000000000000000000000000000000000000000000000000",
+        "pdl_max_num": 8,
+        "reserved4": "00000000000000000000000000000000000000",
+        "features": 32451,
+        "reserved5": "00000000000000000000000000000000"
+    },
+    "volumn": {
+        "default_music_volume": 12,
+        "default_call_volume": 12,
+        "default_tone_volume": 12,
+        "default_mic_gain": 19,
+        "volume_level_num": 16,
+        "volume_levels": [
+            {
+                "music_gain": -51,
+                "call_gain": -45,
+                "tone_gain": -45
+            },
+            {
+                "music_gain": -48,
+                "call_gain": -42,
+                "tone_gain": -42
+            },
+            {
+                "music_gain": -45,
+                "call_gain": -39,
+                "tone_gain": -39
+            },
+            {
+                "music_gain": -42,
+                "call_gain": -36,
+                "tone_gain": -36
+            },
+            {
+                "music_gain": -39,
+                "call_gain": -33,
+                "tone_gain": -33
+            },
+            {
+                "music_gain": -36,
+                "call_gain": -30,
+                "tone_gain": -30
+            },
+            {
+                "music_gain": -33,
+                "call_gain": -27,
+                "tone_gain": -27
+            },
+            {
+                "music_gain": -30,
+                "call_gain": -24,
+                "tone_gain": -24
+            },
+            {
+                "music_gain": -27,
+                "call_gain": -21,
+                "tone_gain": -21
+            },
+            {
+                "music_gain": -24,
+                "call_gain": -18,
+                "tone_gain": -18
+            },
+            {
+                "music_gain": -21,
+                "call_gain": -15,
+                "tone_gain": -15
+            },
+            {
+                "music_gain": -19,
+                "call_gain": -12,
+                "tone_gain": -12
+            },
+            {
+                "music_gain": -16,
+                "call_gain": -10,
+                "tone_gain": -10
+            },
+            {
+                "music_gain": -13,
+                "call_gain": -9,
+                "tone_gain": -9
+            },
+            {
+                "music_gain": -10,
+                "call_gain": -8,
+                "tone_gain": -8
+            },
+            {
+                "music_gain": -7,
+                "call_gain": -7,
+                "tone_gain": -7
+            }
+        ],
+        "reserved": "000000"
+    },
+    "battery": {
+        "battery_low_event_voltage": 3600,
+        "battery_low_power_off_voltage": 3400,
+        "battery_low_prompt_interval": 88,
+        "battery_level_check_interval": 20,
+        "battery_level_voltages": [
+            3300,
+            3400,
+            3500,
+            3600,
+            3700,
+            3750,
+            3800,
+            3850,
+            3900,
+            4000
+        ],
+        "battery_low_prompt_interval_high": 2,
+        "reserved": "00"
+    },
+    "batterycharger": {
+        "bat_chg_full_vol": 4192,
+        "bat_capacity": 30,
+        "bat_chg_total_timeout": 7200,
+        "bat_rechargerl_timeout": 420,
+        "active_charger_cur": 27,
+        "dp_charger_cur": 0,
+        "uvp_charger_cur": 7,
+        "reserved": "000000000000"
+    },
+    "timer": {
+        "reserved1": "00000000000000000000000000000000",
+        "auto_power_off": 1800,
+        "disable_power_off_after_power_on": 10,
+        "power_on_reconnect_interval": 10,
+        "link_loss_reconnect_interval": 10,
+        "reserved2": "00000000000000000000000000000000000000000000000000000000"
+    },
+    "tonesetting": {
+        "tone_voluem_mode": 0,
+        "tone_language": 1
+    },
+    "eventtonenum": {
+        "num": 10
+    },
+    "eventtonelist": {
+        "events": [
+            {
+                "event_id": 8033,
+                "tone_id": 5,
+                "tone_channel": 2,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 8034,
+                "tone_id": 3,
+                "tone_channel": 2,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 8017,
+                "tone_id": 4,
+                "tone_channel": 3,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 1000,
+                "tone_id": 0,
+                "tone_channel": 3,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 1001,
+                "tone_id": 0,
+                "tone_channel": 3,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 8002,
+                "tone_id": 2,
+                "tone_channel": 2,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 8003,
+                "tone_id": 1,
+                "tone_channel": 2,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 8036,
+                "tone_id": 0,
+                "tone_channel": 3,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 8009,
+                "tone_id": 6,
+                "tone_channel": 3,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 1040,
+                "tone_id": 7,
+                "tone_channel": 3,
+                "tone_volume": 12
+            }
+        ]
+    },
+    "userkeynum": {
+        "num": 14
+    },
+    "userkeysetting": {
+        "long_time": 2000,
+        "vlong_time": 5000,
+        "vvlong_time": 10000,
+        "reserved1": 0,
+        "climb_thres": 151920,
+        "fall_thres": 151280,
+        "repeat_start_time": 1000,
+        "repeat_rate": 400,
+        "max_multi_tap_interval": 200,
+        "debounce_check_interval": 20,
+        "max_multi_tap_interval_high": 0,
+        "reserved2": "000000000000"
+    },
+    "userkeylist": {
+        "userkeys": [
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 0,
+                            "src": 2,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1019,
+                "system_state": 96
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 0,
+                            "src": 2,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1012,
+                "system_state": 128
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 0,
+                            "src": 2,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1014,
+                "system_state": 512
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 0,
+                            "src": 2,
+                            "type": 1
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1036,
+                "system_state": 4064
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 0,
+                            "src": 2,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1014,
+                "system_state": 256
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 0,
+                            "src": 2,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1013,
+                "system_state": 128
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 0,
+                            "src": 2,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1017,
+                "system_state": 1024
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 0,
+                            "src": 2,
+                            "type": 2
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1016,
+                "system_state": 1024
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 0,
+                            "src": 2,
+                            "type": 1
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1015,
+                "system_state": 1024
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 0,
+                            "src": 2,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1016,
+                "system_state": 2048
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 0,
+                            "src": 2,
+                            "type": 1
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1017,
+                "system_state": 2048
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 0,
+                            "src": 2,
+                            "type": 2
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1010,
+                "system_state": 96
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 0,
+                            "src": 2,
+                            "type": 7
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1023,
+                "system_state": 96
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 0,
+                            "src": 2,
+                            "type": 9
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1024,
+                "system_state": 96
+            }
+        ]
+    },
+    "ledeventnum": {
+        "num": 0
+    },
+    "ledstatenum": {
+        "num": 0
+    },
+    "eqsend": {
+        "voice_eq": {
+            "sample_rate": 1,
+            "enable_lp_filter": 0,
+            "lp_freq_hz": 4000,
+            "lp_slop": 3,
+            "enable_hp_filter": 0,
+            "hp_freq_hz": 1000,
+            "hp_slop": 3,
+            "enable_eq_filter": 0,
+            "eq_gain": 0,
+            "eq_mode": 0,
+            "reserved": "0000000000000000"
+        },
+        "eq_band_list": [
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            }
+        ]
+    },
+    "eqrecv": {
+        "voice_eq": {
+            "sample_rate": 1,
+            "enable_lp_filter": 0,
+            "lp_freq_hz": 4000,
+            "lp_slop": 3,
+            "enable_hp_filter": 0,
+            "hp_freq_hz": 1000,
+            "hp_slop": 3,
+            "enable_eq_filter": 0,
+            "eq_gain": 0,
+            "eq_mode": 0,
+            "reserved": "0000000000000000"
+        },
+        "eq_band_list": [
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            }
+        ]
+    },
+    "eqmusic": {
+        "music_eq": {
+            "sample_rate": 0,
+            "enable_lp_filter": 0,
+            "lp_freq_hz": 0,
+            "lp_slop": 0,
+            "enable_hp_filter": 0,
+            "hp_freq_hz": 0,
+            "hp_slop": 0,
+            "enable_eq_filter": 1,
+            "eq_gain": 0,
+            "eq_mode": 0,
+            "reserved": "0000000000000000"
+        },
+        "eq_band_list": [
+            {
+                "freq_hz": 500,
+                "gain_db": 110,
+                "q": 20,
+                "type": 0
+            },
+            {
+                "freq_hz": 1000,
+                "gain_db": -200,
+                "q": 300,
+                "type": 0
+            },
+            {
+                "freq_hz": 2000,
+                "gain_db": -360,
+                "q": 250,
+                "type": 0
+            },
+            {
+                "freq_hz": 50,
+                "gain_db": -850,
+                "q": 66,
+                "type": 0
+            },
+            {
+                "freq_hz": 5500,
+                "gain_db": 0,
+                "q": 1000,
+                "type": 0
+            },
+            {
+                "freq_hz": 6300,
+                "gain_db": 0,
+                "q": 1000,
+                "type": 0
+            },
+            {
+                "freq_hz": 8000,
+                "gain_db": 0,
+                "q": 1000,
+                "type": 0
+            },
+            {
+                "freq_hz": 10000,
+                "gain_db": 0,
+                "q": 1000,
+                "type": 0
+            },
+            {
+                "freq_hz": 12500,
+                "gain_db": 0,
+                "q": 1000,
+                "type": 0
+            },
+            {
+                "freq_hz": 20000,
+                "gain_db": 0,
+                "q": 1000,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1000,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1000,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1000,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1000,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            }
+        ]
+    },
+    "agcsend": {
+        "sample_rate": 1,
+        "enable_agc": 1,
+        "target_level_dbfs": 0,
+        "compression_gain_dB": 12,
+        "enable_limiter": 1,
+        "agc_mode": 3,
+        "gain_step": 99,
+        "reserved": "0000"
+    },
+    "agcrecv": {
+        "sample_rate": 1,
+        "enable_agc": 0,
+        "target_level_dbfs": 0,
+        "compression_gain_dB": 6,
+        "enable_limiter": 0,
+        "agc_mode": 3,
+        "gain_step": 99,
+        "reserved": "0000"
+    },
+    "aec": {
+        "sample_rate": 1,
+        "enable_aec": 1,
+        "enable_res": 1,
+        "reference_loop_delay_ms": 0,
+        "echo_tail_10ms": 6,
+        "aec_res_threshold": 65,
+        "od_res_ctr": 60,
+        "reserved": "00000000"
+    },
+    "anr": {
+        "sample_rate": 1,
+        "enable_anr": 1,
+        "anr_gain_ctr": 100,
+        "reserved": "00000000"
+    },
+    "mcra": {
+        "sample_rate": 1,
+        "enable_mcra": 1,
+        "pribf_delta_max": 100,
+        "pribf_delta_min": 60,
+        "postbf_delta_min": 20,
+        "postbf_delta_max": 40,
+        "zeta_min": -200,
+        "zeta_max": -100,
+        "zeta_frame_min": -100,
+        "zeta_frame_max": -50,
+        "g_min": -250,
+        "p_nn_mask_thld": 10,
+        "protect_bias": 50,
+        "reserved": "0000000000000000"
+    },
+    "dmnr": {
+        "sample_rate": 1,
+        "enable_dmnr": 1,
+        "mic_distance_mm": 30,
+        "ild_mask_thld": 100,
+        "ild_vad_thld": 30,
+        "f_fb": 1600,
+        "pow_xref_thld": 0,
+        "ref_mask_thld": 0,
+        "enlarge_thld": 100,
+        "estinoise_thld": 100,
+        "snr_thld": 0,
+        "vad_thld": 20,
+        "reserved": "0000000000000000"
+    },
+    "rnn": {
+        "sample_rate": 1,
+        "enable_rnn": 1,
+        "reserved": "00000000"
+    },
+    "audio_gain": {
+        "anc_drc": 0,
+        "full_sacle": 0,
+        "ana_gain": 0,
+        "thr": 16777215,
+        "releasetime": 500,
+        "attacktime": 1
+    },
+    "anc_coff": {
+        "anc_coeff_enable": 0,
+        "anc_noise_check_enable": 0,
+        "anc_frame_cnt": 0,
+        "reserved": "00000000",
+        "coeff_cfg": [
+            {
+                "ff_coeff_mode": 1,
+                "fb_coeff_mode": 1,
+                "ff_coeff_gain": 0,
+                "fb_coeff_gain": 0,
+                "ec_coeff_gain": 0,
+                "ff_user_gain": 10
+            },
+            {
+                "ff_coeff_mode": 2,
+                "fb_coeff_mode": 2,
+                "ff_coeff_gain": 0,
+                "fb_coeff_gain": 0,
+                "ec_coeff_gain": 0,
+                "ff_user_gain": 10
+            },
+            {
+                "ff_coeff_mode": 3,
+                "fb_coeff_mode": 3,
+                "ff_coeff_gain": 0,
+                "fb_coeff_gain": 0,
+                "ec_coeff_gain": 0,
+                "ff_user_gain": 10
+            },
+            {
+                "ff_coeff_mode": 4,
+                "fb_coeff_mode": 4,
+                "ff_coeff_gain": 0,
+                "fb_coeff_gain": 0,
+                "ec_coeff_gain": 0,
+                "ff_user_gain": 10
+            },
+            {
+                "ff_coeff_mode": 3,
+                "fb_coeff_mode": 0,
+                "ff_coeff_gain": 0,
+                "fb_coeff_gain": 0,
+                "ec_coeff_gain": 0,
+                "ff_user_gain": 10
+            },
+            {
+                "ff_coeff_mode": 0,
+                "fb_coeff_mode": 3,
+                "ff_coeff_gain": 0,
+                "fb_coeff_gain": 0,
+                "ec_coeff_gain": 0,
+                "ff_user_gain": 10
+            },
+            {
+                "ff_coeff_mode": 4,
+                "fb_coeff_mode": 3,
+                "ff_coeff_gain": 0,
+                "fb_coeff_gain": 0,
+                "ec_coeff_gain": 0,
+                "ff_user_gain": 10
+            },
+            {
+                "ff_coeff_mode": 3,
+                "fb_coeff_mode": 3,
+                "ff_coeff_gain": 0,
+                "fb_coeff_gain": 0,
+                "ec_coeff_gain": 0,
+                "ff_user_gain": 10
+            },
+            {
+                "ff_coeff_mode": 0,
+                "fb_coeff_mode": 0,
+                "ff_coeff_gain": 0,
+                "fb_coeff_gain": 0,
+                "ec_coeff_gain": 0,
+                "ff_user_gain": 10
+            },
+            {
+                "ff_coeff_mode": 0,
+                "fb_coeff_mode": 0,
+                "ff_coeff_gain": 0,
+                "fb_coeff_gain": 0,
+                "ec_coeff_gain": 0,
+                "ff_user_gain": 10
+            }
+        ]
+    },
+    "ppm_adjust_cfg": {
+        "ppm_adjust": 0
+    },
+    "audio_bt": {
+        "mute_sco_pkt_num": 0,
+        "reserved": "0000000000000000"
+    },
+    "audio_gain_offset": {
+        "gain_offset": -2,
+        "reserved": "0000000000000000"
+    }
+}
