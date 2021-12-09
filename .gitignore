@@ -103,6 +103,8 @@ Untitled Project.si4project£¯
 # bak file
 *.bak
 
+/core0/output/
+
 #JL file
 *.depend
 *.layout
