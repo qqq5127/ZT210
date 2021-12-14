@@ -13,7 +13,7 @@
     },
     "btreadonlydata": {
         "is_left_dev": 1,
-        "tws_role_mode": 2,
+        "tws_role_mode": 1,
         "hci_log_enable": 1,
         "phone_linkloss_timeout": 0,
         "a2dp_sbc_bitpool_max": 0,
@@ -32,17 +32,17 @@
         "vid": 0,
         "pid": 0,
         "default_listen_mode": 0,
-        "default_listen_mode_toggle_config": 8,
+        "default_listen_mode_toggle_config": 7,
         "reserved2": "00000000000000000000000000000000"
     },
     "system": {
         "reserved1": "0000000000000000",
-        "power_on_reconnect_retry_count": 1,
-        "link_loss_reconnect_retry_count": 60,
+        "power_on_reconnect_retry_count": 3,
+        "link_loss_reconnect_retry_count": 18,
         "reserved3": "0000000000000000000000000000000000000000000000000000",
-        "pdl_max_num": 8,
+        "pdl_max_num": 9,
         "reserved4": "00000000000000000000000000000000000000",
-        "features": 32451,
+        "features": 32449,
         "reserved5": "00000000000000000000000000000000"
     },
     "volumn": {
@@ -113,32 +113,32 @@
                 "tone_gain": -12
             },
             {
-                "music_gain": -10,
-                "call_gain": -10,
-                "tone_gain": -10
-            },
-            {
                 "music_gain": -9,
                 "call_gain": -9,
                 "tone_gain": -9
             },
             {
-                "music_gain": -8,
-                "call_gain": -8,
-                "tone_gain": -8
+                "music_gain": -6,
+                "call_gain": -6,
+                "tone_gain": -6
             },
             {
-                "music_gain": -7,
-                "call_gain": -7,
-                "tone_gain": -7
+                "music_gain": -3,
+                "call_gain": -3,
+                "tone_gain": -3
+            },
+            {
+                "music_gain": 0,
+                "call_gain": 0,
+                "tone_gain": 0
             }
         ],
         "reserved": "000000"
     },
     "battery": {
-        "battery_low_event_voltage": 3600,
-        "battery_low_power_off_voltage": 3400,
-        "battery_low_prompt_interval": 88,
+        "battery_low_event_voltage": 3400,
+        "battery_low_power_off_voltage": 3200,
+        "battery_low_prompt_interval": 60,
         "battery_level_check_interval": 20,
         "battery_level_voltages": [
             3300,
@@ -152,7 +152,7 @@
             3900,
             4000
         ],
-        "battery_low_prompt_interval_high": 2,
+        "battery_low_prompt_interval_high": 0,
         "reserved": "00"
     },
     "batterycharger": {
@@ -167,7 +167,7 @@
     },
     "timer": {
         "reserved1": "00000000000000000000000000000000",
-        "auto_power_off": 1800,
+        "auto_power_off": 360,
         "disable_power_off_after_power_on": 10,
         "power_on_reconnect_interval": 10,
         "link_loss_reconnect_interval": 10,
@@ -178,13 +178,19 @@
         "tone_language": 1
     },
     "eventtonenum": {
-        "num": 10
+        "num": 12
     },
     "eventtonelist": {
         "events": [
             {
                 "event_id": 8033,
-                "tone_id": 5,
+                "tone_id": 0,
+                "tone_channel": 2,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 8032,
+                "tone_id": 1,
                 "tone_channel": 2,
                 "tone_volume": 12
             },
@@ -196,61 +202,67 @@
             },
             {
                 "event_id": 8017,
-                "tone_id": 4,
-                "tone_channel": 3,
-                "tone_volume": 12
-            },
-            {
-                "event_id": 1000,
-                "tone_id": 0,
-                "tone_channel": 3,
-                "tone_volume": 12
-            },
-            {
-                "event_id": 1001,
-                "tone_id": 0,
-                "tone_channel": 3,
-                "tone_volume": 12
-            },
-            {
-                "event_id": 8002,
                 "tone_id": 2,
-                "tone_channel": 2,
+                "tone_channel": 3,
                 "tone_volume": 12
             },
             {
-                "event_id": 8003,
-                "tone_id": 1,
-                "tone_channel": 2,
-                "tone_volume": 12
-            },
-            {
-                "event_id": 8036,
-                "tone_id": 0,
+                "event_id": 1006,
+                "tone_id": 10,
                 "tone_channel": 3,
                 "tone_volume": 12
             },
             {
                 "event_id": 8009,
-                "tone_id": 6,
+                "tone_id": 11,
+                "tone_channel": 2,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 1000,
+                "tone_id": 5,
                 "tone_channel": 3,
                 "tone_volume": 12
             },
             {
-                "event_id": 1040,
+                "event_id": 1001,
+                "tone_id": 4,
+                "tone_channel": 3,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 8002,
+                "tone_id": 6,
+                "tone_channel": 2,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 8003,
+                "tone_id": 9,
+                "tone_channel": 2,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 8011,
                 "tone_id": 7,
+                "tone_channel": 3,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 8012,
+                "tone_id": 8,
                 "tone_channel": 3,
                 "tone_volume": 12
             }
         ]
     },
     "userkeynum": {
-        "num": 14
+        "num": 8
     },
     "userkeysetting": {
-        "long_time": 2000,
-        "vlong_time": 5000,
-        "vvlong_time": 10000,
+        "long_time": 1500,
+        "vlong_time": 4000,
+        "vvlong_time": 8000,
         "reserved1": 0,
         "climb_thres": 151920,
         "fall_thres": 151280,
@@ -267,9 +279,9 @@
                 "key_press_info": {
                     "keys": [
                         {
-                            "id": 0,
-                            "src": 2,
-                            "type": 9
+                            "id": 1,
+                            "src": 0,
+                            "type": 7
                         },
                         {
                             "id": 0,
@@ -291,8 +303,56 @@
                 "key_press_info": {
                     "keys": [
                         {
+                            "id": 1,
+                            "src": 0,
+                            "type": 9
+                        },
+                        {
                             "id": 0,
-                            "src": 2,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1001,
+                "system_state": 4094
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 1,
+                            "src": 0,
+                            "type": 3
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1005,
+                "system_state": 4092
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 1,
+                            "src": 0,
                             "type": 0
                         },
                         {
@@ -315,8 +375,8 @@
                 "key_press_info": {
                     "keys": [
                         {
-                            "id": 0,
-                            "src": 2,
+                            "id": 1,
+                            "src": 0,
                             "type": 0
                         },
                         {
@@ -339,8 +399,8 @@
                 "key_press_info": {
                     "keys": [
                         {
-                            "id": 0,
-                            "src": 2,
+                            "id": 1,
+                            "src": 0,
                             "type": 0
                         },
                         {
@@ -363,9 +423,33 @@
                 "key_press_info": {
                     "keys": [
                         {
-                            "id": 0,
-                            "src": 2,
+                            "id": 1,
+                            "src": 0,
                             "type": 1
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        },
+                        {
+                            "id": 0,
+                            "src": 0,
+                            "type": 0
+                        }
+                    ],
+                    "pressed_num": 1
+                },
+                "eventid": 1023,
+                "system_state": 96
+            },
+            {
+                "key_press_info": {
+                    "keys": [
+                        {
+                            "id": 1,
+                            "src": 0,
+                            "type": 2
                         },
                         {
                             "id": 0,
@@ -381,231 +465,21 @@
                     "pressed_num": 1
                 },
                 "eventid": 1036,
-                "system_state": 4064
-            },
-            {
-                "key_press_info": {
-                    "keys": [
-                        {
-                            "id": 0,
-                            "src": 2,
-                            "type": 0
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        }
-                    ],
-                    "pressed_num": 1
-                },
-                "eventid": 1014,
-                "system_state": 256
-            },
-            {
-                "key_press_info": {
-                    "keys": [
-                        {
-                            "id": 0,
-                            "src": 2,
-                            "type": 1
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        }
-                    ],
-                    "pressed_num": 1
-                },
-                "eventid": 1013,
-                "system_state": 128
-            },
-            {
-                "key_press_info": {
-                    "keys": [
-                        {
-                            "id": 0,
-                            "src": 2,
-                            "type": 0
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        }
-                    ],
-                    "pressed_num": 1
-                },
-                "eventid": 1017,
-                "system_state": 1024
-            },
-            {
-                "key_press_info": {
-                    "keys": [
-                        {
-                            "id": 0,
-                            "src": 2,
-                            "type": 2
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        }
-                    ],
-                    "pressed_num": 1
-                },
-                "eventid": 1016,
-                "system_state": 1024
-            },
-            {
-                "key_press_info": {
-                    "keys": [
-                        {
-                            "id": 0,
-                            "src": 2,
-                            "type": 1
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        }
-                    ],
-                    "pressed_num": 1
-                },
-                "eventid": 1015,
-                "system_state": 1024
-            },
-            {
-                "key_press_info": {
-                    "keys": [
-                        {
-                            "id": 0,
-                            "src": 2,
-                            "type": 0
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        }
-                    ],
-                    "pressed_num": 1
-                },
-                "eventid": 1016,
-                "system_state": 2048
-            },
-            {
-                "key_press_info": {
-                    "keys": [
-                        {
-                            "id": 0,
-                            "src": 2,
-                            "type": 1
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        }
-                    ],
-                    "pressed_num": 1
-                },
-                "eventid": 1017,
-                "system_state": 2048
-            },
-            {
-                "key_press_info": {
-                    "keys": [
-                        {
-                            "id": 0,
-                            "src": 2,
-                            "type": 2
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        }
-                    ],
-                    "pressed_num": 1
-                },
-                "eventid": 1010,
-                "system_state": 32
-            },
-            {
-                "key_press_info": {
-                    "keys": [
-                        {
-                            "id": 0,
-                            "src": 2,
-                            "type": 9
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        },
-                        {
-                            "id": 0,
-                            "src": 0,
-                            "type": 0
-                        }
-                    ],
-                    "pressed_num": 1
-                },
-                "eventid": 1001,
-                "system_state": 4094
+                "system_state": 4092
             }
         ]
     },
     "ledeventnum": {
         "num": 0
     },
+    "ledeventlist": {
+        "ledevents": []
+    },
     "ledstatenum": {
         "num": 0
+    },
+    "ledstatelist": {
+        "ledstates": []
     },
     "eqsend": {
         "voice_eq": {
@@ -1016,5 +890,6 @@
     "audio_gain_offset": {
         "gain_offset": -2,
         "reserved": "0000000000000000"
-    }
+    },
+    "customkvs": []
 }

@@ -26,7 +26,6 @@ Information is free from patent or copyright infringement.
 #include "app_econn.h"
 #include "app_wws.h"
 #include "ntc.h"
-#include "app_user_battery.h"
 
 #ifndef CHECK_BATTERY_LEVEL_PERIOD_MS
 #define CHECK_BATTERY_LEVEL_PERIOD_MS (10 * 1000)
@@ -243,7 +242,6 @@ static void app_bat_handle_msg(uint16_t msg_id, void *param)
         ntc_value = ntc_read();
         if (ntc_value != NTC_INVALID) {
             app_econn_handle_ntc_value(ntc_value);
-						//app_user_battery_ntc_check(ntc_value);	//cuixu add
         }
 
         app_cancel_msg(MSG_TYPE_BAT, BAT_MSG_ID_LEVEL);

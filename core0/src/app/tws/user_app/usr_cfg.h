@@ -245,6 +245,15 @@ void usr_cfg_pdl_add(BD_ADDR_T *addr);
 void usr_cfg_pdl_remove(BD_ADDR_T *addr);
 
 /**
+ * @brief check if a device is in the device list or not
+ *
+ * @param addr the address of the device
+ *
+ * @return true if exists, false if not
+ */
+bool_t usr_cfg_pdl_exists(const BD_ADDR_T *addr);
+
+/**
  * @brief get first paired remote device
  *
  * @param addr the buffer to save the device address

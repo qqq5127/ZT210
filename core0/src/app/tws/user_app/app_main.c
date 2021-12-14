@@ -46,12 +46,6 @@ Information is free from patent or copyright infringement.
 #include "app_wqota.h"
 #include "app_ota_sync.h"
 
-#include "app_user_flash.h"
-#include "app_user_spp.h"
-#include "aw8686x.h"
-#include "iot_gpio.h"
-#include "app_user_battery.h"
-
 /*
  * MACROS
  ****************************************************************************
@@ -189,11 +183,6 @@ static void app_main_task_func(void *arg)
     UNUSED(arg);
 
     app_register_msg_handler(MSG_TYPE_MAIN, app_main_handle_msg);
-
-		// user add cuixu
-		app_user_battery_init();
-		app_user_read_data();
-		app_user_spp_init();	
 
     app_bt_init();
     ro_cfg_init();

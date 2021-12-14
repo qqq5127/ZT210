@@ -192,8 +192,9 @@ void iot_mic_bias_mode(IOT_MIC_ADC_MICBIAS_MODE mode);
  * @brief This function is to configure mic_adc and mic_pga fast.
  *
  * @param mic_map is mic id bit map.
+ * @param cb mic open done cb
  */
-void iot_mic_adc_pga_init(uint8_t mic_map);
+void iot_mic_adc_pga_init(uint8_t mic_map, iot_mic_adc_timer_done_callback cb);
 
 /**
  * @brief This function is mic_adc rc tuning, runs when power on each time.

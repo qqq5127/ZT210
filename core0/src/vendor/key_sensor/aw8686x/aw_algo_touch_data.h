@@ -19,9 +19,9 @@ extern "C" {
 #define TOUCH_DATA_RANGE				(0x08) // Data fluctuation does not exceed this value, complete baseline tracking
 #define TOUCH_K_RANGE					(0x08) // Determine whether the data fluctuation is smooth
 
-#define TOUCH_SILL_START		    	(60)  //(0x28) // Start threshold after baseline is exceeded
-#define TOUCH_SILL_STOP					(30)   //(0x10) // Stop threshold after baseline is exceeded
-#define TOUCH_BASE_LINE					(0x12) // BASE_LINE threshold
+#define TOUCH_SILL_START		    	(80)  //(0x28) // Start threshold after baseline is exceeded
+#define TOUCH_SILL_STOP					(40)   //(0x10) // Stop threshold after baseline is exceeded
+#define TOUCH_BASE_LINE					(0x18) // BASE_LINE threshold
 
 #define TOUCH_SILL_K					(0x14) // The threshold is the slope to respond
 

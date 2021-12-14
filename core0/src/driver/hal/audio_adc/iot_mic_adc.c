@@ -181,7 +181,7 @@ void iot_mic_adc_init(void)
     }
 }
 
-void iot_mic_adc_pga_init(uint8_t mic_map)
+void iot_mic_adc_pga_init(uint8_t mic_map, iot_mic_adc_timer_done_callback cb)
 {
     for (IOT_MIC_ADC i = IOT_MIC_ADC_0; i < IOT_MIC_ADC_MAX; i++) {
         BINGO_ANA_MIC_CHANNEL id = (BINGO_ANA_MIC_CHANNEL)i;
@@ -197,12 +197,32 @@ void iot_mic_adc_pga_init(uint8_t mic_map)
             bingo_ana_mic_adc_sst_n(id, false);
         }
     }
-    /*delay 200+39800 = 40ms*/
-    // os_delay(40);
-    if(mic_adc_state.mic_open_map == 1) {
-        os_start_timer(mic_adc_state.sst_timer_id[0], IOT_MIC_ADC_SST_TIMER_MS);
+
+    if (cb) {
+        /*delay 200+39800 = 40ms*/
+        // os_delay(40);
+        if(mic_adc_state.mic_open_map == 1) {
+            os_start_timer(mic_adc_state.sst_timer_id[0], IOT_MIC_ADC_SST_TIMER_MS);
+        } else {
+            os_start_timer(mic_adc_state.sst_timer_id[1], IOT_MIC_ADC_SST_TIMER_MS);
+        }
     } else {
-        os_start_timer(mic_adc_state.sst_timer_id[1], IOT_MIC_ADC_SST_TIMER_MS);
+        for (IOT_MIC_ADC i = IOT_MIC_ADC_0; i < IOT_MIC_ADC_MAX; i++) {
+            BINGO_ANA_MIC_CHANNEL id = (BINGO_ANA_MIC_CHANNEL)i;
+            if (mic_map & BIT(id)) {
+                bingo_ana_mic_pga_lock_prevent(id, false);
+            }
+        }
+
+        for (uint8_t chid = 0; chid < (uint8_t)IOT_MIC_ADC_MAX; chid++) {
+            if (mic_map & BIT(chid)) {
+                bingo_ana_mic_pga_gain_ctrl((BINGO_ANA_MIC_CHANNEL)chid,
+                        (BINGO_ANA_MIC_GAIN)mic_adc_state.cur_ana_gain);
+                bingo_ana_mic_adc_dem_enable((BINGO_ANA_MIC_CHANNEL)chid, true);
+                bingo_ana_mic_adc_vref_ctrl((BINGO_ANA_MIC_CHANNEL)chid, MIC_VOLTAGE_REFERENCE_VALUE);
+                bingo_ana_mic_vcm_ctrl((BINGO_ANA_MIC_CHANNEL)chid, MIC_VOLTAGE_COMMON_VALUE);
+            }
+        }
     }
 }
 
@@ -411,14 +431,16 @@ uint8_t iot_mic_config(uint8_t mic_map, iot_mic_adc_timer_done_callback cb)
 {
     assert(mic_adc_state.mic_open_cnt < MIC_OPEN_CNT_MAX);
 
-    cpu_critical_enter();
-    mic_adc_state.mic_cb[mic_adc_state.mic_open_cnt] = cb;
-    mic_adc_state.mic_open_map |= BIT(mic_adc_state.mic_open_cnt);
-    mic_adc_state.current_mic_map[mic_adc_state.mic_open_cnt]= mic_map;
-    mic_adc_state.mic_open_cnt++;
-    cpu_critical_exit();
+    if (cb) {
+        cpu_critical_enter();
+        mic_adc_state.mic_cb[mic_adc_state.mic_open_cnt] = cb;
+        mic_adc_state.mic_open_map |= BIT(mic_adc_state.mic_open_cnt);
+        mic_adc_state.current_mic_map[mic_adc_state.mic_open_cnt]= mic_map;
+        mic_adc_state.mic_open_cnt++;
+        cpu_critical_exit();
+    }
 
-    iot_mic_adc_pga_init(mic_map);
+    iot_mic_adc_pga_init(mic_map, cb);
 
     return RET_OK;
 }

@@ -22,7 +22,6 @@ Information is free from patent or copyright infringement.
 #include "df100/df100.h"
 #include "df230/df230.h"
 #include "ext_touch/key_ext_touch.h"
-#include "ndt/pt135.h"
 #include "aw8686x/aw8686x_demo.h"
 
 #if KEY_DRIVER_SELECTION != KEY_DRIVER_CUSTOMIZE

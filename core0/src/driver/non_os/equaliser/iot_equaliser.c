@@ -419,7 +419,7 @@ static uint8_t iot_equaliser_coeff_design(IOT_EQ_MODE mode, iot_equaliser_band_t
     fs = param->sample_rate;
     if(mode == IOT_EQ_SPEAKER) {
         for (i = 0; i < IOT_EQ_ES_MAX; i++) {
-            if (param->freq[i] > 0 && param->gain[i] != 0.0f) {
+            if (param->freq[i] > 0) {
                 band_index = eq_bique_num / 2;
                 if(eq_bique_num == 0) {
                     iot_equaliser_design_overall_gain((IOT_EQ_TYPE)param->type[i], param->freq[i], (float)param->q[i], (float)param->gain[i], param->overall_gain, fs,
@@ -442,7 +442,7 @@ static uint8_t iot_equaliser_coeff_design(IOT_EQ_MODE mode, iot_equaliser_band_t
         }
     } else {
         for (i = 0; i < IOT_EQ_EM_MAX; i++) {
-            if (param->freq[i] > 0 && param->gain[i] != 0.0f) {
+            if (param->freq[i] > 0) {
                 band_index = eq_bique_num >> 1;
                 if (!(eq_bique_num % 2)) {
                     iot_equaliser_design((IOT_EQ_TYPE)param->type[i], param->freq[i], (float)param->q[i], (float)param->gain[i], fs,

@@ -22,6 +22,7 @@
         "a2dp_parameter_default": 0,
         "a2dp_sampling_freq_48k_enable": 0,
         "a2dp_codec_priority": 0,
+        "a2dp_codec_ldac_enable": 0,
         "paging_phone_timeout": 0,
         "reserved": "00000000000000000000"
     },
@@ -31,7 +32,7 @@
         "fw_version": 168496141,
         "vid": 0,
         "pid": 0,
-        "default_listen_mode": 0,
+        "default_listen_mode": 1,
         "default_listen_mode_toggle_config": 8,
         "reserved2": "00000000000000000000000000000000"
     },
@@ -42,7 +43,7 @@
         "reserved3": "0000000000000000000000000000000000000000000000000000",
         "pdl_max_num": 8,
         "reserved4": "00000000000000000000000000000000000000",
-        "features": 32450,
+        "features": 32451,
         "reserved5": "00000000000000000000000000000000"
     },
     "volumn": {
@@ -357,7 +358,7 @@
                     "pressed_num": 1
                 },
                 "eventid": 1036,
-                "system_state": 4064
+                "system_state": 4092
             },
             {
                 "key_press_info": {
@@ -1016,5 +1017,9 @@
     "audio_gain_offset": {
         "gain_offset": -2,
         "reserved": "0000000000000000"
+    },
+    "dfs_kv_cfg": {
+        "music_32m_disable": 0,
+        "reserved": "000000"
     }
 }

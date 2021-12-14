@@ -270,6 +270,7 @@ static void bt_evt_enable_state_changed_handler(bt_evt_enable_state_changed_t *p
             memcpy(&context->local_addr, &param.addr, sizeof(BD_ADDR_T));
         }
         app_wws_handle_bt_inited();
+        app_evt_send(EVTSYS_BT_INITED);
     }
 
     //move EVTSYS_POWER_ON ahead of EVTSYS_STATE_CHANGED
@@ -525,6 +526,10 @@ static void bt_evt_hfp_state_changed_handler(bt_evt_hfp_state_changed_t *param)
                            APP_BT_SCO_TIMEOUT_ACTIVE_CALL_MS);
     } else if (param->state < HFP_STATE_ACTIVE_CALL) {
         app_cancel_msg(MSG_TYPE_BT, APP_BT_MSG_ID_CONNECT_SCO);
+    }
+
+    if ((prev_state > HFP_STATE_CONNECTED) && (param->state <= HFP_STATE_CONNECTED)) {
+        app_evt_send(EVTSYS_CALL_END);
     }
 }
 
@@ -1294,6 +1299,11 @@ int app_bt_enter_ag_pairing(void)
     bt_cmd_set_visibility_t param;
     int ret;
 
+    if (!is_bt_rpc_ready()) {
+        DBGLOG_BT_ERR("app_bt_enter_ag_pairing error, not ready\n");
+        return BT_RESULT_DISABLED;
+    }
+
     if (app_wws_is_slave()) {
         DBGLOG_BT_DBG("app_bt_enter_ag_pairing ignored for slave\n");
         return RET_OK;
@@ -1593,7 +1603,6 @@ int app_bt_report_battery_level(uint8_t level)
 {
     bt_cmd_hfp_report_battery_level_t param;
     uint8_t hfp_lvl;
-		uint8_t peer_hfp_lvl;
 
     if (context->hfp_state < HFP_STATE_CONNECTED) {
         return BT_RESULT_NOT_EXISTS;
@@ -1603,18 +1612,6 @@ int app_bt_report_battery_level(uint8_t level)
         DBGLOG_BT_DBG("app_bt_report_battery_level ignore for slave\n");
         return 0;
     }
-		
-		// user add cuixu
-		if(app_wws_is_connected())
-		{
-			peer_hfp_lvl = app_wws_peer_get_battery_level();
-			if(peer_hfp_lvl < level)
-			{
-				level = peer_hfp_lvl;
-			}
-		}
-
-		//user add end
 
     hfp_lvl = level / 10;
 
@@ -1757,6 +1754,11 @@ int app_bt_set_discoverable(bool_t discoverable)
     bt_cmd_set_visibility_t param;
     int ret;
 
+    if (!is_bt_rpc_ready()) {
+        DBGLOG_BT_ERR("app_bt_set_discoverable error, not ready\n");
+        return BT_RESULT_DISABLED;
+    }
+
     if (discoverable == context->visible) {
         return 0;
     }
@@ -1803,6 +1805,11 @@ int app_bt_set_connectable(bool_t connectable)
     bt_cmd_set_visibility_t param;
     int ret;
 
+    if (!is_bt_rpc_ready()) {
+        DBGLOG_BT_ERR("app_bt_set_connectable error, not ready\n");
+        return BT_RESULT_DISABLED;
+    }
+
     if (connectable == context->connectable) {
         return 0;
     }
@@ -1830,6 +1837,11 @@ int app_bt_set_discoverable_and_connectable(bool_t discoverable, bool_t connecta
 {
     bt_cmd_set_visibility_t param;
     int ret;
+
+    if (!is_bt_rpc_ready()) {
+        DBGLOG_BT_ERR("app_bt_set_discoverable_and_connectable error, not ready\n");
+        return BT_RESULT_DISABLED;
+    }
 
     context->visible = discoverable;
     context->connectable = connectable;
@@ -1900,6 +1912,11 @@ int app_bt_send_tws_pair_cmd(uint16_t vid, uint16_t pid, uint8_t magic, uint32_t
     cmd.pid = pid;
     cmd.magic = magic;
     cmd.timeout_ms = timeout;
+
+    if (!is_bt_rpc_ready()) {
+        DBGLOG_BT_ERR("app_bt_send_tws_pair_cmd error, not ready\n");
+        return BT_RESULT_DISABLED;
+    }
 
     ret = app_bt_send_rpc_cmd(BT_CMD_TWS_START_PAIR, &cmd, sizeof(cmd));
 

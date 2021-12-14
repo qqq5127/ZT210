@@ -66,7 +66,7 @@ Information is free from patent or copyright infringement.
 #define DFS_OBJ_GRP_DTOP_OFFSET(obj)            ((obj) - DFS_OBJ_DTOP_START)
 
 #define DFS_TIMEOUT_MS_MIN          5UL
-#define DFS_TIMEOUT_MS_MARGIN       5UL
+#define DFS_TIMEOUT_MS_MARGIN       30UL
 
 #define DFS_PMM_PD_ST_ON            0x4
 
@@ -547,7 +547,7 @@ _restart_timer:
 
 static void dfs_timeout_handler(timer_id_t timer_id, void * arg)
 {
-    dfs_timeout_item_t *first_item = dfs_timeout_first_item();
+    dfs_timeout_item_t *first_item;
     uint8_t obj = DFS_OBJ_MAX;
 
     UNUSED(timer_id);
@@ -558,6 +558,8 @@ static void dfs_timeout_handler(timer_id_t timer_id, void * arg)
     }
 
     cpu_critical_enter();
+
+    first_item = dfs_timeout_first_item();
 
     /* current node is valid and the end ts is past, then remove it */
     if (s_dfs_env.timeout_obj < DFS_OBJ_MAX && first_item != NULL) {

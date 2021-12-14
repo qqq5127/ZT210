@@ -622,6 +622,7 @@ static void handle_ota_get_file_info_offset_command(uint8_t opcode, bool_t need_
     UNUSED(data_len);
     UNUSED(need_rsp);
 
+    ota_sn = param->sn;
     rsp_param.status = STATUS_SUCCESS;
     rsp_param.sn = param->sn;
     rsp_param.offset_be = 0;
@@ -643,6 +644,7 @@ static void handle_ota_inquiry_if_can_update_command(uint8_t opcode, bool_t need
     UNUSED(data_len);
     UNUSED(need_rsp);
 
+    ota_sn = param->sn;
     enter_update_mode_pending = false;
 
     if ((header->vid_be != EC16(OTA_VID)) || (header->pid_be != EC16(OTA_PID))) {
@@ -679,7 +681,6 @@ static void handle_ota_inquiry_if_can_update_command(uint8_t opcode, bool_t need
 static void response_ota_enter_update_mode(uint8_t result)
 {
     enter_update_mode_rsp_param_t rsp_param;
-
     enter_update_mode_pending = false;
 
     rsp_param.status = STATUS_SUCCESS;
@@ -728,18 +729,29 @@ static void request_ota_firmware_block_command(uint32_t offset)
 static void handle_ota_enter_update_mode_command(uint8_t opcode, bool_t need_rsp, uint8_t *data,
                                                  uint16_t data_len)
 {
+    enter_update_mode_cmd_param_t *param = (enter_update_mode_cmd_param_t *)data;
+
     UNUSED(opcode);
     UNUSED(data_len);
     UNUSED(need_rsp);
     UNUSED(data);
 
-    ota_sn = data[0];
-
     if (enter_update_mode_pending) {
-        DBGLOG_WQOTA_ERR("handle_ota_enter_update_mode_command enter_update_mode_pending sn:%d\n",
-                         ota_sn);
+        DBGLOG_WQOTA_ERR(
+            "handle_ota_enter_update_mode_command enter_update_mode_pending sn:%d new_sn:%d\n",
+            ota_sn, param->sn);
+        ota_sn = param->sn;
         return;
     }
+
+    if (ota_sn == param->sn) {
+        //phone app shuold filter out duplicate response
+        response_ota_enter_update_mode(0);
+        DBGLOG_WQOTA_ERR("handle_ota_enter_update_mode_command duplicate sn:%d\n", ota_sn);
+        return;
+    }
+
+    ota_sn = param->sn;
     enter_update_mode_pending = true;
 
     if (ota_pkt_pool_init() == false) {
@@ -786,6 +798,8 @@ static void handle_ota_exit_update_mode_command(uint8_t opcode, bool_t need_rsp,
 
     UNUSED(data_len);
     UNUSED(need_rsp);
+
+    ota_sn = param->sn;
 
     rsp_param.status = STATUS_SUCCESS;
     rsp_param.sn = param->sn;
@@ -879,6 +893,8 @@ static void handle_ota_get_refresh_firmware_status_command(uint8_t opcode, bool_
     UNUSED(data_len);
     UNUSED(need_rsp);
 
+    ota_sn = param->sn;
+
     refresh_status_rsp_param.status = STATUS_SUCCESS;
     refresh_status_rsp_param.sn = param->sn;
 
@@ -913,6 +929,8 @@ static void handle_ota_wws_role_switch_command(uint8_t opcode, bool_t need_rsp, 
     UNUSED(data_len);
     UNUSED(need_rsp);
 
+    ota_sn = param->sn;
+
     if (app_wws_is_connected()) {
         rsp_param.status = STATUS_SUCCESS;
         rsp_param.result = 0;
@@ -937,6 +955,7 @@ static void handle_ota_get_sync_state_command(uint8_t opcode, bool_t need_rsp, u
     UNUSED(data_len);
     UNUSED(need_rsp);
 
+    ota_sn = param->sn;
     sync_state = app_ota_sync_get_state();
 
     rsp_param.status = STATUS_SUCCESS;
