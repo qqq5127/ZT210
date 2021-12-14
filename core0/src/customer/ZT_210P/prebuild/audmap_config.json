@@ -16,7 +16,7 @@
       "id": 1,
       "bias": 0,
       "adc": 1,
-      "chn": 0,
+      "chn": 2,
       "asrc": 255,
       "rx_fifo": 255,
       "dac": 1
@@ -26,7 +26,7 @@
       "id": 2,
       "bias": 0,
       "adc": 0,
-      "chn": 2,
+      "chn": 0,
       "asrc": 255,
       "rx_fifo": 255,
       "dac": 1

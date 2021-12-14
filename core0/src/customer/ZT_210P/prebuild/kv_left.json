@@ -42,7 +42,7 @@
         "reserved3": "0000000000000000000000000000000000000000000000000000",
         "pdl_max_num": 8,
         "reserved4": "00000000000000000000000000000000000000",
-        "features": 32451,
+        "features": 32450,
         "reserved5": "00000000000000000000000000000000"
     },
     "volumn": {
@@ -717,81 +717,81 @@
         },
         "eq_band_list": [
             {
-                "freq_hz": 500,
-                "gain_db": 110,
-                "q": 20,
+                "freq_hz": 200,
+                "gain_db": -600,
+                "q": 70,
                 "type": 0
             },
             {
-                "freq_hz": 1000,
-                "gain_db": -200,
-                "q": 300,
+                "freq_hz": 3000,
+                "gain_db": 900,
+                "q": 100,
                 "type": 0
             },
             {
-                "freq_hz": 2000,
-                "gain_db": -360,
-                "q": 250,
-                "type": 0
-            },
-            {
-                "freq_hz": 50,
-                "gain_db": -850,
-                "q": 66,
-                "type": 0
-            },
-            {
-                "freq_hz": 5500,
-                "gain_db": 0,
-                "q": 1000,
-                "type": 0
-            },
-            {
-                "freq_hz": 6300,
-                "gain_db": 0,
-                "q": 1000,
-                "type": 0
-            },
-            {
-                "freq_hz": 8000,
-                "gain_db": 0,
-                "q": 1000,
+                "freq_hz": 1500,
+                "gain_db": -500,
+                "q": 100,
                 "type": 0
             },
             {
                 "freq_hz": 10000,
-                "gain_db": 0,
-                "q": 1000,
-                "type": 0
-            },
-            {
-                "freq_hz": 12500,
-                "gain_db": 0,
-                "q": 1000,
-                "type": 0
-            },
-            {
-                "freq_hz": 20000,
-                "gain_db": 0,
-                "q": 1000,
+                "gain_db": 900,
+                "q": 100,
                 "type": 0
             },
             {
                 "freq_hz": 0,
                 "gain_db": 0,
-                "q": 1000,
+                "q": 1,
                 "type": 0
             },
             {
                 "freq_hz": 0,
                 "gain_db": 0,
-                "q": 1000,
+                "q": 1,
                 "type": 0
             },
             {
                 "freq_hz": 0,
                 "gain_db": 0,
-                "q": 1000,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
+                "type": 0
+            },
+            {
+                "freq_hz": 0,
+                "gain_db": 0,
+                "q": 1,
                 "type": 0
             },
             {
