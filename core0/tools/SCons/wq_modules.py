@@ -28,11 +28,19 @@ class WQModule():
         self.base = Dir('.')
         self.src = [File(s) for s in Flatten(src)]
 
-        allowed_keys = ['pub_inc', 'pri_inc', 'defines', 'exclude', 'resources', 'flags', 'libs', 'sub_mod']
-        self.__dict__.update((key, []) for key in allowed_keys)
-        self.__dict__.update((k, env.Flatten([v])) for k, v in kargs.items() if k in allowed_keys)
+        self.pub_inc = kargs.get('pub_inc', [])
+        self.pri_inc = kargs.get('pri_inc', [])
+        self.defines = kargs.get('defines', [])
+        self.exclude = kargs.get('exclude', [])
+        self.resources = kargs.get('resources', [])
+        self.flags = kargs.get('flags', [])
+        self.libs = kargs.get('libs', [])
+        self.sub_mod = []
 
         self.g_env.Append(CPPPATH=self.pub_inc)
+
+        if kargs.get('sub_mod', []):
+            self.sub_mod.append(kargs.get('sub_mod', []))
 
         if self.exclude:
             self.g_env.Append(EXCLUDE = [os.path.join(self.base.abspath, e) for e in self.exclude])
@@ -52,20 +60,9 @@ class WQModule():
         libs = []
 
         if self.libs:
-            for l in self.libs:
-                if str(l).endswith(self.g_env['LIBSUFFIX']):
-                    # With .a is a full name lib
-                    libs.append(self.g_env.File(os.path.join(self.base.srcnode().abspath, str(l))))
-                elif os.sep in str(l):
-                    # is a path and not ends with .a
-                    # eg: 'src/module_name/lib/name', 'should be src/module_name/lib/libname.a'
-                    path, name = os.path.split(str(l))
-                    libname = self.g_env.subst("${LIBPREFIX}%s${LIBSUFFIX}" % name)
-                    libs.append(self.g_env.File(os.path.join(self.base.srcnode().abspath, path, libname)))
-                else:
-                    # just a name eg: 'gcc'
-                    libname = self.g_env.subst("${LIBPREFIX}%s${LIBSUFFIX}" % str(l))
-                    libs.append(self.g_env.File(os.path.join(self.base.srcnode().abspath, libname)))
+            for l in Flatten([self.libs]):
+                libname = self.g_env.subst("${LIBPREFIX}%s${LIBSUFFIX}" % l)
+                libs.append(self.g_env.File(os.path.join(self.base.srcnode().abspath, libname)))
 
         env = self.g_env.Clone()
         env.Append(CPPPATH=self.pri_inc)

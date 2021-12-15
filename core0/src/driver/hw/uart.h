@@ -134,7 +134,6 @@ void uart_set_stop_bit(UART_PORT port, UART_STOP_BITS num);
 void uart_dma_enable(UART_PORT port);
 void uart_config(UART_PORT port, const uart_configuration_t *cfg);
 bool_t uart_pin_config(UART_PORT port, const uart_pin_configuration_t *cfg);
-void uart_reset_pin(UART_PORT port, uint16_t pin);
 void uart_pin_direction(UART_PORT port, uint16_t pin, UART_DIRECTION_TYPE direction);
 void uart_pin_release(UART_PORT port);
 bool_t uart_flow_control_config(UART_PORT port, const uart_flow_control_cfg_t *cfg);

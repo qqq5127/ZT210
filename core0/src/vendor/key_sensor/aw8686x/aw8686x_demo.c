@@ -24,6 +24,7 @@
 #include "lib_dbglog.h"
 #include "aw8686x.h"
 
+#include "app_econn_wqdemo.h"
 
 //#include "cmsis_os.h"
 //#include "stdio.h"
@@ -278,8 +279,9 @@ static void aw8686x_demo_int_isr(void)
 #endif
 
 //static osThreadId aw8686x_thread_id0;
-static os_task_h aw8686x_thread_id0 = NULL;
-static os_event_h p_aw8686x_event;
+//static os_task_h aw8686x_thread_id0 = NULL;
+//static os_event_h p_aw8686x_event;
+#if 0
 
 static void (*aw8686x_demo_thread0_cb)(void) = NULL;
 
@@ -290,24 +292,21 @@ static void aw8686x_demo_thread0_handler(void* arg)
 	
 	aw8686x_demo_thread0_cb();
 }
-
 static uint32_t aw8686x_demo_signal_wait(void)
 {
-#if 0
 	osEvent event;
 	event = osSignalWait(0, osWaitForever);
 	if (event.status == osEventSignal) {
 		return (uint32_t)event.value.signals;
 	}
-#endif
 
-	bool_t ret;
-	uint32_t events;
+	//bool_t ret;
+	//uint32_t events;
 	
-	ret = os_wait_event(p_aw8686x_event, MAX_TIME, &events);
-	if (ret) {
-		return events;
-	}
+	//ret = os_wait_event(p_aw8686x_event, MAX_TIME, &events);
+	//if (ret) {
+	//	return events;
+	//}
 	
 	return AW_OK;
 }
@@ -315,13 +314,13 @@ static uint32_t aw8686x_demo_signal_wait(void)
 static void aw8686x_demo_clear_signal(uint32_t signal)
 {
 	//osSignalClear(aw8686x_thread_id0, (int32_t)signal);
-	os_clear_event(p_aw8686x_event, signal);
+	//os_clear_event(p_aw8686x_event, signal);
 }
 
 static void aw8686x_demo_set_signal0(uint32_t signal)
 {
 	//osSignalSet(aw8686x_thread_id0, (int32_t)signal);
-	os_set_event(p_aw8686x_event, signal);
+	//os_set_event(p_aw8686x_event, signal);
 }
 // osThreadDef(aw8686x_demo_thread0_handler, osPriorityNormal, 1, 2048, "aw_thread0");
 
@@ -339,11 +338,13 @@ static void aw8686x_demo_create_thread0(void (*thread_cb) (void))
     }
 	
 	aw8686x_demo_thread0_cb = thread_cb;
-	aw8686x_thread_id0 = os_create_task_ext(aw8686x_demo_thread0_handler, NULL, 7, 2048, "aw_thread0");
+	aw8686x_thread_id0 = os_create_task_ext(aw8686x_demo_thread0_handler, NULL, 5, 2048, "aw_thread0");
     if(!aw8686x_thread_id0) {
         os_delete_task(aw8686x_thread_id0);
     }
+	
 }
+#endif	
 
 //static HWTIMER_ID aw8686x_timer_id0;
 static timer_id_t aw8686x_timer_id0 = 0;
@@ -589,7 +590,14 @@ static void aw8686x_power_cfg(void)
 {
 	uint8_t pull_mode = IOT_GPIO_PULL_NONE;
 	
-	gpio_vcc = iot_resource_lookup_gpio(VCC_GPIO);
+		gpio_vcc = iot_resource_lookup_gpio(VCC_GPIO);
+		
+		if (gpio_vcc == IOT_AONGPIO_00) {
+				gpio_vcc = IOT_GPIO_63;
+		} else if (gpio_vcc == IOT_AONGPIO_01) {
+				gpio_vcc = IOT_GPIO_64;
+		}
+	
     AWLOGD("aw8686x gpio_vcc = %d\n", gpio_vcc);
     if (gpio_vcc != 0xFF) {
         iot_gpio_open(gpio_vcc, IOT_GPIO_DIRECTION_OUTPUT);
@@ -612,10 +620,10 @@ void aw8686x_init(key_callback_t callback)
 		.p_i2c_rx = aw8686x_demo_i2c_read_func,
 		.p_timer0_start = aw8686x_demo_timer0_start,
 		.p_timer0_stop = aw8686x_demo_timer0_stop,
-		.p_set_signal0 = aw8686x_demo_set_signal0,
-		.p_wait_signal = aw8686x_demo_signal_wait,
-		.p_clear_signal = aw8686x_demo_clear_signal,
-		.p_thread0_create = aw8686x_demo_create_thread0,
+		.p_set_signal0 = app_econn_aw8686x_send_msg,
+		.p_wait_signal = NULL,
+		.p_clear_signal = NULL,
+		.p_thread0_create = NULL,
 #ifdef AW_SPP_USED
 		.p_aw_spp_write = aw8686x_spp_write,
 #endif
@@ -648,15 +656,24 @@ void aw8686x_deinit(bool_t wakeup_enable)
 
 	os_stop_timer(aw8686x_timer_id0);
 	
-	os_delete_event(p_aw8686x_event);
-    p_aw8686x_event = NULL;
-    os_delete_task(aw8686x_thread_id0);
+	//os_delete_event(p_aw8686x_event);
+   // p_aw8686x_event = NULL;
+   // os_delete_task(aw8686x_thread_id0);
 	
 	iot_i2c_close(I2C_PORT);
 	
 	iot_gpio_write(gpio_vcc, 1);
+	aw8686x_sensor_free_memory();
 	AWLOGD("[aw8686x_deinit]:***************\n");
 }
 
+bool aw8686x_timer_is_active(void) 
+{
+	if(os_is_timer_active(aw8686x_timer_id0))
+		return true;
+	else
+		return false;
+
+}
 #endif
 

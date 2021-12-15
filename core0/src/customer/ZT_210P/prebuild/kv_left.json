@@ -162,7 +162,7 @@
         "bat_chg_total_timeout": 7200,
         "bat_rechargerl_timeout": 420,
         "active_charger_cur": 27,
-        "dp_charger_cur": 0,
+        "dp_charger_cur": 10,
         "uvp_charger_cur": 7,
         "reserved": "000000000000"
     },
@@ -179,67 +179,43 @@
         "tone_language": 1
     },
     "eventtonenum": {
-        "num": 10
+        "num": 6
     },
     "eventtonelist": {
         "events": [
             {
                 "event_id": 8033,
-                "tone_id": 5,
-                "tone_channel": 2,
-                "tone_volume": 12
-            },
-            {
-                "event_id": 8034,
                 "tone_id": 3,
                 "tone_channel": 2,
                 "tone_volume": 12
             },
             {
-                "event_id": 8017,
-                "tone_id": 4,
-                "tone_channel": 3,
-                "tone_volume": 12
-            },
-            {
-                "event_id": 1000,
-                "tone_id": 0,
-                "tone_channel": 3,
-                "tone_volume": 12
-            },
-            {
-                "event_id": 1001,
-                "tone_id": 0,
-                "tone_channel": 3,
-                "tone_volume": 12
-            },
-            {
-                "event_id": 8002,
-                "tone_id": 2,
-                "tone_channel": 2,
-                "tone_volume": 12
-            },
-            {
-                "event_id": 8003,
+                "event_id": 8034,
                 "tone_id": 1,
                 "tone_channel": 2,
                 "tone_volume": 12
             },
             {
-                "event_id": 8036,
+                "event_id": 8017,
+                "tone_id": 2,
+                "tone_channel": 3,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 1000,
+                "tone_id": 5,
+                "tone_channel": 3,
+                "tone_volume": 12
+            },
+            {
+                "event_id": 8002,
                 "tone_id": 0,
-                "tone_channel": 3,
+                "tone_channel": 2,
                 "tone_volume": 12
             },
             {
-                "event_id": 8009,
-                "tone_id": 6,
-                "tone_channel": 3,
-                "tone_volume": 12
-            },
-            {
-                "event_id": 1040,
-                "tone_id": 7,
+                "event_id": 8032,
+                "tone_id": 4,
                 "tone_channel": 3,
                 "tone_volume": 12
             }

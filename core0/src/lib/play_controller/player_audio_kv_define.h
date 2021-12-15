@@ -31,8 +31,6 @@ typedef enum {
     VOICE_AEC_SEND_CFG_KV_ID,
     VOICE_MCRA_SEND_CFG_KV_ID,
     MUSIC_EQ_CFG_KV_ID,
-    VOICE_DMNR_SEND_CFG2_KV_ID,
-    VOICE_NS_RECV_CFG_KV_ID,
 } audio_kv_id_t;
 
 #endif //_PLAYER_AUDIO_KV_H

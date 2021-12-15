@@ -56,12 +56,6 @@ void app_tone_indicate_event(uint16_t event_id);
 bool app_tone_is_playing(void);
 
 /**
- * @brief  get playing event tone
- * @return playing event tone
- */
-uint32_t app_tone_get_playing_event(void);
-
-/**
  * @brief  stop a indicated event tone
  *
  * @param event_id  event should be stopped
@@ -91,8 +85,8 @@ void app_tone_action_end(void);
  *      only vaild in bt clock trigger case.
  * @return set RET_XXX for detail.
  */
-uint32_t app_tone_send_play_msg(uint32_t tone_id, uint32_t sync_by_sn, uint64_t start_point,
-                                uint32_t start_rtc_ms);
+uint32_t app_tone_send_play_msg(uint32_t tone_id, uint32_t sync_by_sn,
+    uint64_t start_point, uint32_t start_rtc_ms);
 
 /**
  * @brief for SLAVE to process sync tone cancel cmd from MASTER.

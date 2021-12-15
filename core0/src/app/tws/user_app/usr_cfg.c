@@ -459,25 +459,6 @@ void usr_cfg_pdl_get_next(BD_ADDR_T *addr)
     memcpy(addr, &pdl->items[index].addr, sizeof(BD_ADDR_T));
 }
 
-bool_t usr_cfg_pdl_exists(const BD_ADDR_T *addr)
-{
-    uint8_t index;
-
-    assert(addr);
-
-    index = pdl->head;
-    assert(index < USR_CFG_MAX_PAIR_LIST);
-
-    do {
-        if (bdaddr_is_equal(&pdl->items[index].addr, addr)) {
-            return true;
-        }
-        index = (index + 1) % USR_CFG_MAX_PAIR_LIST;
-    } while (index != pdl->head);
-
-    return false;
-}
-
 void usr_cfg_pdl_get_first(BD_ADDR_T *addr)
 {
     uint8_t index;

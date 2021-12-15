@@ -56,8 +56,6 @@ typedef enum
     VOICE_PARAM_ANR_SEND,
     VOICE_PARAM_AEC_SEND,
     VOICE_PARAM_MCRA_SEND,
-    VOICE_PARAM_DMNR2_SEND,
-    VOICE_PARAM_NS_RECV,
     VOICE_PARAM_ALL = 0xFF,
     VOICE_PARAM_INIT = 0x100,
 } voice_param_type_t;
@@ -220,29 +218,6 @@ typedef struct wind_noise_send_cfg {
     uint8_t             reserved[8];                //TBD
 } wind_noise_send_cfg_t;
 
-typedef struct dmnr_send_cfg2 {
-    uint8_t             enable_dmnr_cfg2;
-    uint16_t            loud_noisy_fb_voice_thld;           //loud noise fb threshold: 1000~2550(actual value*10)
-    uint8_t             h_thld_up[4];                       //10~90(acutal value*100)
-    uint8_t             h_thld_dn[4];                       //10~90(acutal value*100)
-    uint8_t             h_thld_up_fb[4];                    //10~90(acutal value*100)
-    uint8_t             h_thld_dn_fb[4];                    //10~90(acutal value*100)
-    uint8_t             dmnr_pre_gain;                      //20~200(actual value*100)
-    uint8_t             reserved[63];                       //reserved
-} dmnr_send_cfg2_t;
-
-typedef struct ns_recv_cfg{
-    uint8_t             enable_ns_recv;
-    uint8_t             delta_max;                  //0~200 (actual value*10)
-    uint8_t             delta_min;                  //0~200 (actual value*10)
-    int16_t             zeta_min;                   //-250~200 (actual value*10)
-    int16_t             zeta_max;                   //-200~200 (actual value*10)
-    int16_t             zeta_frame_min;             //-200~200 (actual value*10)
-    int16_t             zeta_frame_max;             //-150~150 (actual value*10)
-    int16_t             g_min;                      //-600~-0 (actual value*10)
-    uint8_t             reserved[16];               //reserved
-}ns_recv_cfg_t;
-
 typedef struct voice_cfg_all {
     dma_send_cfg_t                  voice_dma_send_cfg;
     dmnr_send_cfg_t                 voice_dmnr_send_cfg;
@@ -254,8 +229,6 @@ typedef struct voice_cfg_all {
     agc_cfg_t                       voice_agc_recv_cfg;
     voice_eq_cfg_t                  voice_eq_send_cfg;
     voice_eq_cfg_t                  voice_eq_recv_cfg;
-    dmnr_send_cfg2_t                voice_dmnr_send_cfg2;
-    ns_recv_cfg_t                   voice_ns_recv_cfg;
 } voice_cfg_all_t;
 
 #pragma pack(pop)   /* restore the pack status */

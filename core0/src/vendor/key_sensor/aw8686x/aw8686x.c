@@ -1278,6 +1278,11 @@ static void aw8686x_irq_thread_handler(void)
 		AWLOGD("the tws is not ear");
 		app_sysfreq_req(APP_SYSFREQ_USER_APP_13, APP_SYSFREQ_52M);
 	}*/
+
+	if(aw8686x_timer_is_active())
+		{
+		return;	
+	}
 	aw8686x_close_low_power();
 	aw8686x_i2c_read(REG_INTR_STAT, &irq_data);
 	AWLOGD("irq data = 0x%x", irq_data);
@@ -1440,22 +1445,16 @@ static void aw8686x_get_adc_data_to_alg(void)
 	}
 }
 
-static void aw8686x_thread0_cb(void)
+void aw8686x_thread0_cb(uint8_t msg)
 {
-	uint32_t ret = 0;
-	//uint32_t slow;
 
-	AWLOGD("%s : enter", __func__);
-	while (AW_TRUE) {
-		ret = aw_signal_wait();
-		if (ret == AW8686X_SIGNAL_TIMER) {
-			aw8686x_get_adc_data_to_alg();
-		} else if (ret == AW8686X_SIGNAL_IRQ) {
-			AWLOGD("%s : irq signal", __func__);
-			aw8686x_irq_thread_handler();
-		} else {
-			AWLOGD("%s : err signal", __func__);
-		}
+	if(msg == AW8686X_SIGNAL_TIMER)
+	{
+		aw8686x_get_adc_data_to_alg();
+	}
+	else if(msg == AW8686X_SIGNAL_IRQ)
+	{
+		aw8686x_irq_thread_handler();
 	}
 }
 
@@ -2121,14 +2120,7 @@ static void aw_app_init_data(void)
 
 static uint8_t aw8686x_api_init(struct aw8686x_api_interface *api)
 {
-	if ((api->aw_delay_ms_func == NULL) || (api->p_i2c_tx == NULL) ||
-		(api->p_i2c_rx == NULL) || (api->p_timer0_start == NULL) ||
-		(api->p_timer0_stop == NULL) || (api->p_set_signal0 == NULL) ||
-		(api->p_wait_signal == NULL) || (api->p_thread0_create == NULL) ||
-		(api->p_clear_signal == NULL) ||
-		(api->p_snd_key_event == NULL) ) {
-		return AW_ERR;
-	} else {
+	{
 		aw_delay_ms = api->aw_delay_ms_func;
 		aw_send_key_event = api->p_snd_key_event;
 		i2c_transfer_tx = api->p_i2c_tx;
@@ -2157,7 +2149,7 @@ static uint8_t aw8686x_api_init(struct aw8686x_api_interface *api)
 		aw_flash_read = api->p_aw_flash_read;
 	}
 #endif
-	thread0_create(aw8686x_thread0_cb);
+	//thread0_create(aw8686x_thread0_cb);
 
 	return AW_OK;
 }
@@ -2235,5 +2227,13 @@ int32_t aw8686x_sensor_init(struct aw8686x_api_interface *api)
 	return ret;
 }
 
+void aw8686x_sensor_free_memory(void)
+{
+	if(p_touch_alg_out != NULL)
+	{
+		os_mem_free(p_touch_alg_out);
+		p_touch_alg_out = NULL;
+	}
+}
 #endif
 

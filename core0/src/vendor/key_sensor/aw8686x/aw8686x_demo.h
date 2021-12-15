@@ -112,6 +112,7 @@ struct aw8686x_api_interface {
 
 extern void aw8686x_init(key_callback_t callback);
 extern void aw8686x_deinit(bool_t wakeup_enable);
+extern bool aw8686x_timer_is_active(void);
 
 #ifdef __cplusplus
 }

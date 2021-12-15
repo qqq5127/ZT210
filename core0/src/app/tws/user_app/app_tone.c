@@ -53,16 +53,16 @@ AFIFO_INIT(tone, uint8_t, TONE_FIFO_SIZE);
 
 // time reserved for tone sync playing
 #ifndef PLAY_TONE_SYNC_DELAY_US
-#define PLAY_TONE_SYNC_DELAY_US (200 * 1000)
+#define PLAY_TONE_SYNC_DELAY_US         (200*1000)
 #endif
 
 /* default delay before sending play tone msg. */
 #ifndef TONE_PLAY_DEFAULT_DELAY_US
-#define TONE_PLAY_DEFAULT_DELAY_US 0
+#define TONE_PLAY_DEFAULT_DELAY_US      0
 #endif
 
 #ifndef TONE_PLAY_MAX_RPC_LATENCY_US
-#define TONE_PLAY_MAX_RPC_LATENCY_US (280 * 1000)
+#define TONE_PLAY_MAX_RPC_LATENCY_US    (280*1000)
 #endif
 
 static uint8_t app_tone_stop_sync(uint32_t event_id);
@@ -181,7 +181,7 @@ uint8_t app_tone_start_sync(uint16_t tone_id, uint32_t force_sync_by_timing)
 {
     uint8_t result;
     uint32_t is_streaming = app_is_streaming();
-    uint32_t target_sn = player_get_tone_start_ts(PLAY_TONE_SYNC_DELAY_US / 1000);
+    uint32_t target_sn = player_get_tone_start_ts(PLAY_TONE_SYNC_DELAY_US/1000);
 
     if (force_sync_by_timing) {
         DBGLOG_TONE_DBG("play tone id %d, target_sn = %d. force_sync_by_timing.\n", tone_id,
@@ -450,11 +450,6 @@ exit_label:
 bool app_tone_is_playing(void)
 {
     return tone_event_in_playing != 0;
-}
-
-uint32_t app_tone_get_playing_event(void)
-{
-    return tone_event_in_playing;
 }
 
 void app_tone_cancel_all(bool_t stop_playing)
@@ -730,7 +725,7 @@ static uint32_t app_tone_play_request_handler(tone_msg_play_t *p_tone_msg_play)
         player_tone_create_stream();
     } else {
         uint32_t is_streaming = app_is_streaming();
-        uint32_t local_target_sn = player_get_tone_start_ts(PLAY_TONE_SYNC_DELAY_US / 1000);
+        uint32_t local_target_sn = player_get_tone_start_ts(PLAY_TONE_SYNC_DELAY_US/1000);
         if (is_streaming && ((target_sn == 0) || (local_target_sn == 0))) {
             /* stream while NOT sync by sn, or local is not really playing stream
              * if local target sn is 0.
@@ -772,7 +767,7 @@ static uint32_t app_tone_play_request_handler(tone_msg_play_t *p_tone_msg_play)
     DBGLOG_TONE_ERR("post msg. fixed_delay_ms = %lu, start_rtc_us = %lu.\n", fixed_delay_us,
                     p_tone_msg_play->start_rtc_us);
     app_send_msg_delay(MSG_TYPE_TONE, TONE_MESSAGE_ID_PLAY, p_tone_msg_play,
-                       sizeof(tone_msg_play_t), fixed_delay_us / 1000);
+                       sizeof(tone_msg_play_t), fixed_delay_us/1000);
     return ret;
 }
 

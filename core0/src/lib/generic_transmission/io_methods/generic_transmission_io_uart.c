@@ -126,10 +126,6 @@ static void generic_transmission_io_gpio_cb(void)
     uart_uniq_line_cfg.uniq_pin = CONFIG_GENERIC_TRANSMISSION_UNIQ_LINE_PIN;
     uart_uniq_line_cfg.baud_rate = s_generic_transmission_io_uart_env.uart_cfg.baudrate;
 
-    // Disable uniq-line mode first
-    iot_uart_uniq_line_config(CONFIG_GENERIC_TRANSMISSION_IO_UART_PORT, &uart_uniq_line_cfg);
-    iot_gpio_set_pull_mode(CONFIG_GENERIC_TRANSMISSION_UNIQ_LINE_PIN, IOT_GPIO_PULL_DOWN);
-
     // will fixed in UART0 in ear board, TX->GPIO1, RX->GPIO2
     pin_cfg.tx_pin = IOT_GPIO_01;
     pin_cfg.rx_pin = IOT_GPIO_02;
@@ -140,10 +136,11 @@ static void generic_transmission_io_gpio_cb(void)
     // tx pin may be cliaimed for other usasge, here we need to reclaimed to TX.
     iot_gpio_close(pin_cfg.tx_pin);
 
+    // Disable uniq-line mode first
+    iot_uart_uniq_line_config(CONFIG_GENERIC_TRANSMISSION_IO_UART_PORT, &uart_uniq_line_cfg);
+
     // Enable normal mode
     iot_uart_pin_config(CONFIG_GENERIC_TRANSMISSION_IO_UART_PORT, &pin_cfg);
-
-    DBGLOG_LIB_INFO("[TEST] switch uart pin\n");
 }
 
 static void generic_transmission_io_uart_cfg_init(void)

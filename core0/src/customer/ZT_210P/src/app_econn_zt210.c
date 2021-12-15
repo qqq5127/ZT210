@@ -29,6 +29,13 @@
 #include "dtopcore_data_mgr.h"
 #include "key_sensor.h"
 
+#include "app_user_flash.h"
+#include "app_user_spp.h"
+#include "aw8686x.h"
+#include "iot_gpio.h"
+#include "app_user_battery.h"
+
+
 #define BATTERY_LOW_INTERVAL_MS 870000   //14.5*60*1000
 #define SPP_UUID16              0x1101
 
@@ -1175,12 +1182,17 @@ void app_econn_init(void)
 {
     gatts_service_t *service = NULL;
 
+		// user add cuixu
+		app_user_battery_init();
+		app_user_read_data();
+		app_user_spp_init();
+
     app_register_msg_handler(MSG_TYPE_ECONN, econn_msg_handler);
 
     econn_cfg_load();
     update_player_eq();
 	
-    app_audio_listen_mode_force_normal(true);
+    //app_audio_listen_mode_force_normal(true);
 
     app_spp_register_service(SPP_UUID16, spp_connection_callback, spp_data_callback);
 
@@ -1282,12 +1294,12 @@ void app_econn_handle_peer_battery_level_changed(uint8_t level)
 
 void app_econn_handle_tws_state_changed(bool_t connected)
 {
-    if (connected) {
-        app_audio_listen_mode_force_normal(false);
-    } else {
-        last_battery_low = 0;
-        app_audio_listen_mode_force_normal(true);
-    }
+    //if (connected) {
+    //    app_audio_listen_mode_force_normal(false);
+    //} else {
+    //    last_battery_low = 0;
+    //    app_audio_listen_mode_force_normal(true);
+    //}
 
     app_cancel_msg(MSG_TYPE_ECONN, ECONN_MSG_ID_REPORT_TWS_STATE);
     app_send_msg_delay(MSG_TYPE_ECONN, ECONN_MSG_ID_REPORT_TWS_STATE, NULL, 0, 2000);

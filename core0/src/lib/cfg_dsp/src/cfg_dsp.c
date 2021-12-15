@@ -78,10 +78,6 @@ static void dtop_cfg_all_voice_param(void)
     SET_OR_CLR_BIT(voice_enable_state, VOICE_PARAM_AGC_RECV, voice_cfg->voice_agc_recv_cfg.enable_agc);
     dtop_cfg_per_voice_param((uint8_t *)&voice_cfg->voice_eq_recv_cfg,   sizeof(voice_eq_cfg_t),  VOICE_EQ_RECV_CFG_KV_ID);
     SET_OR_CLR_BIT(voice_enable_state, VOICE_PARAM_EQ_RECV, voice_cfg->voice_eq_recv_cfg.voice_eq_cfg.enable_eq_filter);
-    dtop_cfg_per_voice_param((uint8_t *)&voice_cfg->voice_dmnr_send_cfg2,   sizeof(dmnr_send_cfg2_t),   VOICE_DMNR_SEND_CFG2_KV_ID);
-    SET_OR_CLR_BIT(voice_enable_state, VOICE_PARAM_DMNR2_SEND, voice_cfg->voice_dmnr_send_cfg2.enable_dmnr_cfg2);
-    dtop_cfg_per_voice_param((uint8_t *)&voice_cfg->voice_ns_recv_cfg,   sizeof(ns_recv_cfg_t),  VOICE_NS_RECV_CFG_KV_ID);
-    SET_OR_CLR_BIT(voice_enable_state, VOICE_PARAM_NS_RECV, voice_cfg->voice_ns_recv_cfg.enable_ns_recv);
 
     dsp_config_voice_param(VOICE_PARAM_INIT, (void *)voice_cfg, sizeof(voice_cfg_all_t));
 

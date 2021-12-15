@@ -33,7 +33,6 @@ Information is free from patent or copyright infringement.
 #include "app_inear.h"
 #include "ota_task.h"
 #include "audio_anc.h"
-#include "shipping_mode.h"
 
 #define PEER_EVENT_FLAG 0x8000
 
@@ -282,10 +281,6 @@ static void handle_usr_evt(uint16_t event, bool_t from_peer)
             DBGLOG_EVT_DBG("EVTUSR_VOICE_RECOGNITION_DEACTIVATE\n");
             app_bt_deactivate_voice_recognition();
             break;
-        case EVTUSR_ENTER_SHIPPING_MODE:
-            DBGLOG_EVT_DBG("EVTUSR_ENTER_SHIPPING_MODE\n");
-            shipping_mode_enter();
-            break;
         default:
             break;
     }
@@ -304,8 +299,8 @@ static void handle_sys_evt(uint16_t event, void *param)
     }
 
     switch (event) {
-        case EVTSYS_BT_INITED:
-            DBGLOG_EVT_DBG("EVTSYS_BT_INITED\n");
+        case EVTSYS_BT_ON_COMPLETE:
+            DBGLOG_EVT_DBG("EVTSYS_BT_ON_COMPLETE\n");
             break;
         case EVTSYS_STATE_CHANGED: {
             uint32_t state;

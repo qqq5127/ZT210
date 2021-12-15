@@ -215,13 +215,6 @@ void app_audio_anc_level_set(anc_level_t level);
 void app_audio_transparency_level_set(transparency_level_t level);
 
 /**
- * @brief check if anc switch is running
- *
- * @return true if anc switching, false if not
- */
-bool_t app_audio_is_anc_switching(void);
-
-/**
  * @brief switch listen mode by different charging status
  *
  * @param charging true if charging, false if not

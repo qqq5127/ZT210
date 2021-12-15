@@ -30,14 +30,14 @@
 
 void app_user_battery_init(void)
 {
-	iot_gpio_open(BATTERY_CTRL_GPIO, IOT_GPIO_DIRECTION_OUTPUT);
-	iot_gpio_set_pull_mode(BATTERY_CTRL_GPIO, IOT_GPIO_PULL_DOWN);
-	iot_gpio_write(BATTERY_CTRL_GPIO, 0);
+	//iot_gpio_open(BATTERY_CTRL_GPIO, IOT_GPIO_DIRECTION_OUTPUT);
+	//iot_gpio_set_pull_mode(BATTERY_CTRL_GPIO, IOT_GPIO_PULL_DOWN);
+	//iot_gpio_write(BATTERY_CTRL_GPIO, 0);
 }
 
 void app_user_battery_off(void)
 {
-	iot_gpio_write(BATTERY_CTRL_GPIO, 1);
+	//iot_gpio_write(BATTERY_CTRL_GPIO, 1);
 }
 
 void app_user_battery_ntc_check(int8_t value)

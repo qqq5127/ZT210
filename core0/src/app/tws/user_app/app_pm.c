@@ -125,32 +125,22 @@ static inline void stop_auto_power_off(void)
     app_cancel_msg(MSG_TYPE_PM, PM_MSG_ID_AUTO_POWER_OFF);
 }
 
-static void wait_tone_led_anc_done(void)
+static void wait_tone_led_done(void)
 {
-    bool_t tone_playing;
-    bool_t led_playing;
-    bool_t anc_switching;
-
     for (int i = 1; i <= MAX_TONE_DONE_WAIT_TIME_MS / 100; i++) {
         app_handle_pending_message();
-
-        tone_playing = app_tone_is_playing();
-        led_playing = app_led_is_event_playing();
-        anc_switching = app_audio_is_anc_switching();
-
-        if ((!tone_playing) && (!led_playing) && (!anc_switching)) {
-            DBGLOG_PM_DBG("wait (tone %d, led %d, anc %d) done\n", tone_playing, led_playing,
-                          anc_switching);
+        uint32_t tone_playing = app_tone_is_playing() ? 1 : 0;
+        uint32_t led_playing = app_led_is_event_playing() ? 1 : 0;
+        if ((!tone_playing) && (!led_playing)) {
+            DBGLOG_PM_ERR("wait (tone %d, led %d) done!!\n", tone_playing, led_playing);
             break;
         }
         if (i % 5 == 0) {
-            DBGLOG_PM_ERR("wait (tone %d, led %d, anc %d)\n", tone_playing, led_playing,
-                          anc_switching);
+            DBGLOG_PM_ERR("wait (tone %d, led %d).\n", tone_playing, led_playing);
         }
         os_delay(100);
         if (i == MAX_TONE_DONE_WAIT_TIME_MS / 100) {
-            DBGLOG_PM_ERR("wait (tone %d, led %d, anc %d) timeout!\n", tone_playing, led_playing,
-                          anc_switching);
+            DBGLOG_PM_ERR("wait (tone %d, led %d) timeout!!\n", tone_playing, led_playing);
             app_tone_cancel_all(true);
         }
     }
@@ -166,7 +156,7 @@ static void do_shutdown(void)
     DBGLOG_PM_DBG("[auto]do_shutdown\n");
     context->shutdown_ending = true;
 
-    wait_tone_led_anc_done();
+    wait_tone_led_done();
 
     app_deinit();
     os_delay(100);   //wait flash write done
@@ -248,7 +238,7 @@ static void do_reboot(void)
 
     DBGLOG_PM_DBG("do_reboot\n");
 
-    wait_tone_led_anc_done();
+    wait_tone_led_done();
 
     app_deinit();
     DBGLOG_PM_DBG("boot_reason_system_reset\n");

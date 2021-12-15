@@ -177,11 +177,7 @@ static void iot_uart_pin_direction(IOT_UART_PORT port, int direction, bool_t in_
             }
         }
 
-        uint32_t mask = cpu_disable_irq();
-        if (iot_uart_uniq_line_stats[port].enable) {
-            uart_pin_direction(p, iot_uart_uniq_line_stats[port].uniq_pin, (UART_DIRECTION_TYPE)direction);
-        }
-        cpu_restore_irq(mask);
+        uart_pin_direction(p, iot_uart_uniq_line_stats[port].uniq_pin, (UART_DIRECTION_TYPE)direction);
     }
 }
 
@@ -453,12 +449,6 @@ void iot_uart_pin_config(IOT_UART_PORT port, const iot_uart_pin_configuration_t 
 void iot_uart_uniq_line_config(IOT_UART_PORT port, const iot_uart_uniq_line_configuration_t *cfg)
 {
     iot_uart_uniq_line_stats[port].enable = cfg->enable;
-
-    if (!cfg->enable) {
-        uart_reset_pin((UART_PORT)port, cfg->uniq_pin);
-        iot_uart_uniq_line_stats[port].uniq_pin = 0xFF;
-    }
-
     iot_uart_uniq_line_stats[port].uniq_pin = (uint8_t)cfg->uniq_pin;
     //The delay is used for wait uart line busy
     iot_uart_uniq_line_stats[port].switch_to_rx_delay = (uint16_t)(10 * 1000 * 1000 / cfg->baud_rate + UNIQ_LINE_SWITCH_TO_RX_EXTRA_DELAY);

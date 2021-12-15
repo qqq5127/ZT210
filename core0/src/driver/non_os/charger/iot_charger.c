@@ -30,7 +30,6 @@ static iot_charger_int_callback iot_charger_int_cb = NULL;
 static bool_t iot_charger_inited = false;
 static iot_irq_t iot_charger_irq = 0;
 static cal_data_charger iot_charger_cal_data = {0};
-static bool_t iot_charger_gpio_en = false;
 
 static const int16_t def_vol[32] = {
     3734, 3772, 3802, 3832, 3863, 3894, 3925, 3857, 3990, 4018, 4046, 4074, 4103, 4132, 4162, 4192,
@@ -72,14 +71,11 @@ void iot_charger_init(void)
         pmm_charger_flag_en(true);
         pmm_ana_charger_iout_pmos_cal(pmos_code);
         iot_charger_int_config();
-
-        // close chg pin uart if in box
-        if (iot_charger_gpio_en) {
-            if (flag) {
-                pmm_charger_vbus_gpio_enable(false);
-            } else {
-                pmm_charger_vbus_gpio_enable(true);
-            }
+        //colse chg pin uart if in box
+        if (flag) {
+            iot_charger_gpio_enable(false);
+        } else {
+            iot_charger_gpio_enable(true);
         }
         pmm_charger_uvp_sel();
 
@@ -102,7 +98,6 @@ void iot_charger_register_int_cb(IOT_CHARGER_INT_TYPE int_type, iot_charger_int_
 
 void iot_charger_gpio_enable(bool_t enable)
 {
-    iot_charger_gpio_en = enable;
     pmm_charger_vbus_gpio_enable(enable);
 }
 

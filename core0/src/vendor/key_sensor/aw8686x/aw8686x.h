@@ -78,8 +78,8 @@
 #define DYNAMIC_CALI_VALUE		(1000)
 #define AW_ALGO_NO_PRESS_TIME		(67)
 #define AW_ALGO_PRESS_TIME		(25)
-#define AW8686X_SIGNAL_IRQ		(2)
-#define AW8686X_SIGNAL_TIMER		(1)
+#define AW8686X_SIGNAL_IRQ		(100)
+#define AW8686X_SIGNAL_TIMER		(101)
 #define AW8686X_ERR_DATA		(8192)
 #define AW8686X_IMPEDANCE_MAG		(1000)
 #define ALGO_CALIB_FACTOR		(0x64)
@@ -450,6 +450,7 @@ void aw8686x_open_irq(void);
 void aw8686x_i2c_low_power(void);
 void aw8686x_swdt_low_power(void);
 void aw8686x_i2c_wakeup(void);
+void aw8686x_sensor_free_memory(void);
 #ifdef AW8686X_FTC
 extern void aw8686x_FTC(CALI_FLAG_T flag);
 #endif
@@ -459,5 +460,6 @@ extern void aw8686x_spp_cmd_handler(uint8_t *dat, uint16_t len);
 #endif
 
 #endif
+void aw8686x_thread0_cb(uint8_t msg);
 
 #endif

@@ -171,6 +171,13 @@ void app_user_parse_data(uint8_t *data,uint8_t len,app_parse_type_e type)
 			response_data[3] = data[3];
 			break;
 
+		case APP_PARSE_ENTRY_FTM:
+#if KEY_DRIVER_SELECTION == KEY_DRIVER_AW8686X
+			aw8686x_deinit(false);
+#endif
+			DBGLOG_USER_PARSE_DBG("APP_PARSE_ENTRY_FTM \n"); 			
+		break;
+
 		case APP_PARSE_FORCE_TOUCH_READ_ID:
 			{
 				char* response_char = NULL;

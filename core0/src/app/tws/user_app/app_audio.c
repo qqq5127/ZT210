@@ -697,11 +697,6 @@ void app_audio_transparency_level_set(transparency_level_t level)
     }
 }
 
-bool_t app_audio_is_anc_switching(void)
-{
-    return demnose_mode_handling;
-}
-
 void app_audio_handle_bt_power_on(void)
 {
     if (app_bt_is_in_audio_test_mode() || app_bt_is_in_dut_mode()) {
