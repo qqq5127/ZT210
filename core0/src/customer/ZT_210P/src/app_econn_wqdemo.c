@@ -114,8 +114,9 @@ static void econn_msg_handler(uint16_t msg_id, void *param)
 
 				case ECONN_MSG_ID_AW86862_INT:
 				case ECONN_MSG_ID_AW86862_TIMER:
-						
+#if KEY_DRIVER_SELECTION == KEY_DRIVER_AW8686X
 						aw8686x_thread0_cb((uint8_t )msg_id);
+#endif
 						break;
         default:
             break;
@@ -129,7 +130,7 @@ void app_econn_init(void)
 	app_user_read_data();
 	app_user_spp_init();
 
-    app_register_msg_handler(MSG_TYPE_ECONN, econn_msg_handler);
+  app_register_msg_handler(MSG_TYPE_ECONN, econn_msg_handler);
 }
 
 void app_econn_deinit(void)
